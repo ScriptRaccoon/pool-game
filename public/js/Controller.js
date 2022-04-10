@@ -18,7 +18,6 @@ export class Controller {
                 factor * (this.mouse.x - whiteBall.pos.x);
             whiteBall.vel.y =
                 factor * (this.mouse.y - whiteBall.pos.y);
-            this.active = false;
         });
     }
 

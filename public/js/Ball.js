@@ -3,11 +3,15 @@ import { distance, norm } from "./utils.js";
 
 export class Ball {
     static list = [];
+    static idle = true;
 
-    static get isIdle() {
-        return Ball.list.every(
-            (ball) => ball.vel.x == 0 && ball.vel.y == 0
-        );
+    static updateAll() {
+        Ball.list.forEach((b) => b.update());
+        Ball.idle = Ball.list.every((ball) => ball.idle);
+    }
+
+    static drawAll() {
+        Ball.list.forEach((b) => b.draw());
     }
 
     constructor({ pos, vel, color }) {
@@ -16,7 +20,6 @@ export class Ball {
         this.color = color;
         this.size = 18;
         this.friction = 0.99;
-        this.minVel = 0.04;
 
         this.gradient = ctx.createRadialGradient(
             -0.35 * this.size,
@@ -46,39 +49,42 @@ export class Ball {
         ctx.restore();
     }
 
+    get idle() {
+        return this.vel.x == 0 && this.vel.y == 0;
+    }
+
     update() {
-        if (this.vel.x == 0 && this.vel.y == 0) return;
+        if (this.idle) return;
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
         this.vel.x *= this.friction;
         this.vel.y *= this.friction;
+        this.pushBalls();
+        this.bounceOfWalls();
+        this.handleTinyVelocity();
+    }
 
-        if (Math.abs(this.vel.x) < this.minVel) {
+    handleTinyVelocity() {
+        const tiny = 0.04;
+        if (Math.abs(this.vel.x) < tiny) {
             this.vel.x = 0;
         }
-
-        if (Math.abs(this.vel.y) < this.minVel) {
+        if (Math.abs(this.vel.y) < tiny) {
             this.vel.y = 0;
         }
+    }
 
-        this.pushBalls();
-
-        this.bounceOfWalls();
+    intersects(ball) {
+        return distance(this.pos, ball.pos) <= this.size + ball.size;
     }
 
     pushBalls() {
         Ball.list.forEach((ball) => {
-            if (ball == this) {
-                return;
-            }
-            if (
-                distance(this.pos, ball.pos) <=
-                this.size + ball.size
-            ) {
+            if (ball == this) return;
+            if (this.intersects(ball)) {
                 const factor = 0.015 * norm(this.vel);
                 ball.vel.x += factor * (ball.pos.x - this.pos.x);
                 ball.vel.y += factor * (ball.pos.y - this.pos.y);
-
                 const factor2 = 0.004 * norm(this.vel);
                 this.vel.x += factor2 * (this.pos.x - ball.pos.x);
                 this.vel.y += factor2 * (this.pos.y - ball.pos.y);
