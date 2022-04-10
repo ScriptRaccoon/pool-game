@@ -1,1 +1,1 @@
-# Billard game with JavaScript
+# Pool Billiard game with JavaScript
