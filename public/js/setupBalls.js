@@ -9,12 +9,6 @@ export function setupBalls() {
     const start = { x: 850, y: 300 };
 
     new Ball({
-        pos: { x: 200, y: 300 },
-        vel: { x: 30, y: 0 },
-        color: "white",
-    });
-
-    new Ball({
         pos: { x: start.x, y: start.y },
         vel: { x: 0, y: 0 },
         color: "yellow",

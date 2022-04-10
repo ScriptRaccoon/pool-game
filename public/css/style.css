@@ -16,6 +16,6 @@ canvas {
     box-sizing: content-box;
     display: block;
     background-color: rgb(26, 130, 26);
-    border: 30px solid rgb(159, 57, 23);
-    border-radius: 15px;
+    /* border: 30px solid rgb(159, 57, 23); */
+    /* border-radius: 15px; */
 }

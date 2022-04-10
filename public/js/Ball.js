@@ -4,6 +4,12 @@ import { distance, norm } from "./utils.js";
 export class Ball {
     static list = [];
 
+    static whiteBall = new Ball({
+        pos: { x: 200, y: 300 },
+        vel: { x: 0, y: 0 },
+        color: "white",
+    });
+
     constructor({ pos, vel, color }) {
         this.pos = pos;
         this.vel = vel;
