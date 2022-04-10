@@ -1,4 +1,4 @@
-import { ctx } from "./canvas.js";
+import { ctx, pocketSize } from "./canvas.js";
 import { distance } from "./utils.js";
 
 export class Pocket {
@@ -10,7 +10,7 @@ export class Pocket {
 
     constructor({ pos }) {
         this.pos = pos;
-        this.size = 30;
+        this.size = pocketSize;
         Pocket.list.push(this);
     }
 
