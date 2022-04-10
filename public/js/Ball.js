@@ -1,5 +1,6 @@
 import { canvas, ctx } from "./canvas.js";
 import { Pocket } from "./Pocket.js";
+import { state } from "./state.js";
 import { distance, norm } from "./utils.js";
 
 export class Ball {
@@ -18,10 +19,11 @@ export class Ball {
         Ball.list.forEach((b) => b.draw());
     }
 
-    constructor({ pos, color, vel }) {
+    constructor({ pos, color, vel, isBlack }) {
         this.pos = pos;
         this.originalPos = { ...pos };
         this.vel = vel ?? { x: 0, y: 0 };
+        this.isBlack = isBlack ?? false;
         this.color = color;
         this.size = 18;
         this.friction = 0.99;
@@ -79,6 +81,16 @@ export class Ball {
                 this.inPocket = true;
                 this.vel.x = 0;
                 this.vel.y = 0;
+                if (this.isBlack) {
+                    console.log("black ball in pocket!");
+                    state.won = Ball.list.every(
+                        (ball) =>
+                            ball == whiteBall ||
+                            ball == this ||
+                            ball.inPocket
+                    );
+                    console.log(state);
+                }
                 return;
             }
         });
