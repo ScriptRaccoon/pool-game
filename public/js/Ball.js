@@ -1,4 +1,5 @@
 import { canvas, ctx } from "./canvas.js";
+import { Pocket } from "./Pocket.js";
 import { distance, norm } from "./utils.js";
 
 export class Ball {
@@ -54,7 +55,7 @@ export class Ball {
     }
 
     update() {
-        if (this.idle) return;
+        if (this.idle || this.inPocket) return;
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
         this.vel.x *= this.friction;
@@ -62,6 +63,16 @@ export class Ball {
         this.pushBalls();
         this.bounceOfWalls();
         this.handleTinyVelocity();
+        this.checkPockets();
+    }
+
+    checkPockets() {
+        Pocket.list.forEach((pocket) => {
+            if (pocket.includes(this)) {
+                this.remove();
+                return;
+            }
+        });
     }
 
     handleTinyVelocity() {
@@ -110,5 +121,9 @@ export class Ball {
             this.pos.y = this.size;
             this.vel.y *= -bounceFriction;
         }
+    }
+
+    remove() {
+        Ball.list = Ball.list.filter((ball) => ball != this);
     }
 }
