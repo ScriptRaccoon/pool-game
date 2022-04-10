@@ -1,4 +1,4 @@
-import { whiteBall } from "./setupBalls.js";
+import { whiteBall } from "./Ball.js";
 import { ctx, canvas } from "./canvas.js";
 import { mousePos } from "./utils.js";
 

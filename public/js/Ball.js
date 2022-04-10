@@ -9,6 +9,9 @@ export class Ball {
     static updateAll() {
         Ball.list.forEach((b) => b.update());
         Ball.idle = Ball.list.every((ball) => ball.idle);
+        if (Ball.idle && whiteBall.inPocket) {
+            whiteBall.reset();
+        }
     }
 
     static drawAll() {
@@ -17,6 +20,7 @@ export class Ball {
 
     constructor({ pos, color, vel }) {
         this.pos = pos;
+        this.originalPos = { ...pos };
         this.vel = vel ?? { x: 0, y: 0 };
         this.color = color;
         this.size = 18;
@@ -34,10 +38,13 @@ export class Ball {
         this.gradient.addColorStop(0, "rgba(255,255,255,0.35)");
         this.gradient.addColorStop(1, "transparent");
 
+        this.inPocket = false;
+
         Ball.list.push(this);
     }
 
     draw() {
+        if (this.inPocket) return;
         ctx.save();
         ctx.translate(this.pos.x, this.pos.y);
         ctx.beginPath();
@@ -69,7 +76,9 @@ export class Ball {
     checkPockets() {
         Pocket.list.forEach((pocket) => {
             if (pocket.includes(this)) {
-                this.remove();
+                this.inPocket = true;
+                this.vel.x = 0;
+                this.vel.y = 0;
                 return;
             }
         });
@@ -91,7 +100,7 @@ export class Ball {
 
     pushBalls() {
         Ball.list.forEach((ball) => {
-            if (ball == this) return;
+            if (ball == this || ball.inPocket) return;
             if (this.intersects(ball)) {
                 const factor = 0.008 * norm(this.vel);
                 ball.vel.x += factor * (ball.pos.x - this.pos.x);
@@ -123,7 +132,17 @@ export class Ball {
         }
     }
 
-    remove() {
-        Ball.list = Ball.list.filter((ball) => ball != this);
+    // remove() {
+    //     Ball.list = Ball.list.filter((ball) => ball != this);
+    // }
+
+    reset() {
+        this.inPocket = false;
+        this.pos = { ...this.originalPos };
     }
 }
+
+export const whiteBall = new Ball({
+    pos: { x: 200, y: 300 },
+    color: "white",
+});
