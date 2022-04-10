@@ -6,6 +6,19 @@ export function norm(v) {
     return Math.sqrt(Math.pow(v.x, 2) + Math.pow(v.y, 2));
 }
 
+export function normalize(v) {
+    if (v.x == 0 && v.y == 0) return v;
+    return scale(1 / norm(v), v);
+}
+
+export function sub(v, w) {
+    return { x: v.x - w.x, y: v.y - w.y };
+}
+
+export function scale(r, v) {
+    return { x: r * v.x, y: r * v.y };
+}
+
 export function mousePos(e, canvas) {
     const rect = canvas.getBoundingClientRect();
     return {

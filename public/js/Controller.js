@@ -1,6 +1,6 @@
 import { whiteBall } from "./Ball.js";
-import { ctx, canvas } from "./canvas.js";
-import { mousePos } from "./utils.js";
+import { ctx, canvas, canvasNorm } from "./canvas.js";
+import { mousePos, sub, scale, normalize } from "./utils.js";
 
 export class Controller {
     constructor() {
@@ -30,13 +30,24 @@ export class Controller {
 
     draw() {
         if (!this.active) return;
-        ctx.lineWidth = 8;
-        ctx.strokeStyle = "rgba(255,250,100,0.5)";
+        ctx.save();
         ctx.lineCap = "round";
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "rgba(255,255,255,0.5)";
+        const target = sub(this.mouse, whiteBall.pos);
+        ctx.translate(whiteBall.pos.x, whiteBall.pos.y);
         ctx.beginPath();
-        ctx.moveTo(whiteBall.pos.x, whiteBall.pos.y);
-        ctx.lineTo(this.mouse.x, this.mouse.y);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(target.x, target.y);
         ctx.stroke();
         ctx.closePath();
+        const targetFar = scale(canvasNorm, normalize(target));
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(targetFar.x, targetFar.y);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
     }
 }
