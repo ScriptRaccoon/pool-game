@@ -43,8 +43,9 @@ export function setupBalls() {
     //     color: "brown",
     // });
 
+    // x: start.x + 3 * step.x, y: start.y - 1 * step.y
     new Ball({
-        pos: { x: start.x + 3 * step.x, y: start.y - 1 * step.y },
+        pos: { x: 600, y: 500 },
         color: "black",
         isBlack: true,
     });
@@ -79,10 +80,10 @@ export function setupBalls() {
     //     color: "darkgreen",
     // });
 
+    //  pos: { x: start.x + 4 * step.x, y: start.y + 4 * step.y },
+
     new Ball({
-        pos: { x: start.x + 4 * step.x, y: start.y + 4 * step.y },
+        pos: { x: 600, y: 20 },
         color: "brown",
     });
-
-    Ball.list.forEach((b) => b.draw());
 }

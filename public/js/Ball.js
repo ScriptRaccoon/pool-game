@@ -1,6 +1,6 @@
 import { canvas, ctx } from "./canvas.js";
 import { Pocket } from "./Pocket.js";
-import { state } from "./state.js";
+import { endMessage, state, writeStatus } from "./state.js";
 import { distance, norm } from "./utils.js";
 
 export class Ball {
@@ -82,14 +82,14 @@ export class Ball {
                 this.vel.x = 0;
                 this.vel.y = 0;
                 if (this.isBlack) {
-                    console.log("black ball in pocket!");
                     state.won = Ball.list.every(
                         (ball) =>
                             ball == whiteBall ||
                             ball == this ||
                             ball.inPocket
                     );
-                    console.log(state);
+                    state.playing = false;
+                    writeStatus(endMessage());
                 }
                 return;
             }
@@ -154,7 +154,8 @@ export class Ball {
     }
 }
 
+//  pos: { x: 200, y: 300 },
 export const whiteBall = new Ball({
-    pos: { x: 200, y: 300 },
+    pos: { x: 600, y: 300 },
     color: "white",
 });
