@@ -2,11 +2,11 @@ import { Ball } from "./Ball.js";
 
 export function setupBalls() {
     const step = {
-        x: 40,
-        y: 24,
+        x: 33,
+        y: 19,
     };
 
-    const start = { x: 780, y: 300 };
+    const start = { x: 850, y: 300 };
 
     new Ball({
         pos: { x: 200, y: 300 },

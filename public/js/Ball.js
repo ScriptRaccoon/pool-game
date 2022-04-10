@@ -8,7 +8,7 @@ export class Ball {
         this.pos = pos;
         this.vel = vel;
         this.color = color;
-        this.size = 20;
+        this.size = 18;
         this.friction = 0.99;
 
         this.gradient = ctx.createRadialGradient(
