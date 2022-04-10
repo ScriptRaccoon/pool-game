@@ -4,6 +4,12 @@ import { distance, norm } from "./utils.js";
 export class Ball {
     static list = [];
 
+    static get isIdle() {
+        return Ball.list.every(
+            (ball) => ball.vel.x == 0 && ball.vel.y == 0
+        );
+    }
+
     static whiteBall = new Ball({
         pos: { x: 200, y: 300 },
         vel: { x: 0, y: 0 },
@@ -48,7 +54,6 @@ export class Ball {
 
     update() {
         if (this.vel.x == 0 && this.vel.y == 0) return;
-        console.log("update...");
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
         this.vel.x *= this.friction;

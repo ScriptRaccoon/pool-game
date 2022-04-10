@@ -5,6 +5,7 @@ import { mousePos } from "./utils.js";
 export class Controller {
     constructor() {
         this.mouse = { x: 0, y: 0 };
+        this.active = false;
     }
 
     followMouse() {
@@ -14,6 +15,7 @@ export class Controller {
     }
 
     draw() {
+        if (!this.active) return;
         const whiteBallPos = Ball.whiteBall.pos;
         ctx.lineWidth = 8;
         ctx.strokeStyle = "rgba(255,250,100,0.5)";

@@ -15,6 +15,9 @@ function loop() {
     Ball.list.forEach((b) => b.update());
     Ball.list.forEach((b) => b.draw());
     myController.draw();
+    if (Ball.isIdle) {
+        myController.active = true;
+    }
     requestAnimationFrame(loop);
 }
 
