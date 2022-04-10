@@ -1,5 +1,4 @@
 import { Ball } from "./Ball.js";
-
 import { clearCanvas } from "./canvas.js";
 import { Controller } from "./Controller.js";
 import { Pocket } from "./Pocket.js";

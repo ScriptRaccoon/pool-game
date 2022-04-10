@@ -149,10 +149,6 @@ export class Ball {
         }
     }
 
-    // remove() {
-    //     Ball.list = Ball.list.filter((ball) => ball != this);
-    // }
-
     reset() {
         this.inPocket = false;
         this.pos = { ...this.originalPos };
@@ -160,8 +156,7 @@ export class Ball {
     }
 }
 
-//  pos: { x: 200, y: 300 },
 export const whiteBall = new Ball({
-    pos: { x: 600, y: 300 },
+    pos: { x: 200, y: 300 },
     color: "white",
 });
