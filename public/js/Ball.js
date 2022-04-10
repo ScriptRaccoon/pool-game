@@ -9,7 +9,7 @@ export class Ball {
 
     static updateAll() {
         Ball.list.forEach((b) => b.update());
-        Ball.idle = Ball.list.every((ball) => ball.idle);
+        Ball.idle = Ball.list.every((b) => b.idle);
         if (Ball.idle && whiteBall.inPocket) {
             whiteBall.reset();
         }
@@ -19,10 +19,15 @@ export class Ball {
         Ball.list.forEach((b) => b.draw());
     }
 
+    static resetAll() {
+        Ball.list.forEach((b) => b.reset());
+    }
+
     constructor({ pos, color, vel, isBlack }) {
         this.pos = pos;
         this.originalPos = { ...pos };
         this.vel = vel ?? { x: 0, y: 0 };
+        this.originalVel = { ...this.vel };
         this.isBlack = isBlack ?? false;
         this.color = color;
         this.size = 18;
@@ -151,6 +156,7 @@ export class Ball {
     reset() {
         this.inPocket = false;
         this.pos = { ...this.originalPos };
+        this.vel = { ...this.originalVel };
     }
 }
 

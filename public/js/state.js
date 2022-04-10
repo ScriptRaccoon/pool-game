@@ -1,6 +1,5 @@
 export const state = {
-    started: false,
-    playing: false,
+    playing: true,
     win: null,
 };
 

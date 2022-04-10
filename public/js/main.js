@@ -5,7 +5,7 @@ import { Controller } from "./Controller.js";
 import { Pocket } from "./Pocket.js";
 import { setupBalls } from "./setupBalls.js";
 import { setupPockets } from "./setupPockets.js";
-import { dialogElement, state, writeStatus } from "./state.js";
+import { dialogElement, state } from "./state.js";
 
 const controller = new Controller();
 
@@ -16,7 +16,6 @@ Pocket.drawAll();
 Ball.drawAll();
 
 function loop() {
-    console.log(state.playing);
     clearCanvas();
     Ball.updateAll();
     Pocket.drawAll();
@@ -26,14 +25,13 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
+loop();
+
 function init() {
-    writeStatus("Click here to start the game");
-    dialogElement.addEventListener("click", () => {
-        if (!state.started) {
-            state.started = true;
-            state.playing = true;
-            loop();
-        }
+    restartBtn.addEventListener("click", () => {
+        Ball.resetAll();
+        dialogElement.open = false;
+        state.playing = true;
     });
 }
 
