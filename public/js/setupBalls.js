@@ -1,5 +1,11 @@
 import { Ball } from "./Ball.js";
 
+export const whiteBall = new Ball({
+    pos: { x: 200, y: 300 },
+    vel: { x: 0, y: 0 },
+    color: "white",
+});
+
 export function setupBalls() {
     const step = {
         x: 33,

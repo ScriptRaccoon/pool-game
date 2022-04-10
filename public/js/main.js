@@ -8,8 +8,6 @@ const myController = new Controller();
 
 setupBalls();
 
-myController.followMouse();
-
 function loop() {
     clearCanvas();
     Ball.list.forEach((b) => b.update());
