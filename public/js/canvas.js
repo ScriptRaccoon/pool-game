@@ -2,14 +2,8 @@
 export const canvas = document.querySelector("canvas");
 export const ctx = canvas.getContext("2d");
 
-function makeCanvasFullscreen() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-
-window.addEventListener("resize", makeCanvasFullscreen);
-
-makeCanvasFullscreen();
+canvas.width = 1200;
+canvas.height = 600;
 
 export function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);

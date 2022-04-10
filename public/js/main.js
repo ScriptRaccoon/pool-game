@@ -27,7 +27,7 @@ new Ball({
 });
 
 new Ball({
-    pos: { x: 400, y: 600 },
+    pos: { x: 400, y: 360 },
     vel: { x: 0, y: 0 },
     color: "purple",
 });
