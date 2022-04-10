@@ -10,6 +10,7 @@ export class Ball {
         this.color = color;
         this.size = 18;
         this.friction = 0.99;
+        this.minVel = 0.04;
 
         this.gradient = ctx.createRadialGradient(
             -0.35 * this.size,
@@ -40,16 +41,18 @@ export class Ball {
     }
 
     update() {
+        if (this.vel.x == 0 && this.vel.y == 0) return;
+        console.log("update...");
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
         this.vel.x *= this.friction;
         this.vel.y *= this.friction;
 
-        if (Math.abs(this.vel.x) < 0.1) {
+        if (Math.abs(this.vel.x) < this.minVel) {
             this.vel.x = 0;
         }
 
-        if (Math.abs(this.vel.y) < 0.1) {
+        if (Math.abs(this.vel.y) < this.minVel) {
             this.vel.y = 0;
         }
 
@@ -59,7 +62,6 @@ export class Ball {
     }
 
     pushBalls() {
-        if (this.vel.x == 0 && this.vel.y == 0) return;
         Ball.list.forEach((ball) => {
             if (ball == this) {
                 return;
