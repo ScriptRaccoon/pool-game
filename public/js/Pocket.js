@@ -1,4 +1,5 @@
-import { ctx, pocketSize } from "./canvas.js";
+import { ctx } from "./canvas.js";
+import { pocketSize } from "./table.js";
 import { distance } from "./utils.js";
 
 export class Pocket {
