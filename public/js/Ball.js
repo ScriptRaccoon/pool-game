@@ -14,9 +14,9 @@ export class Ball {
         Ball.list.forEach((b) => b.draw());
     }
 
-    constructor({ pos, vel, color }) {
+    constructor({ pos, color, vel }) {
         this.pos = pos;
-        this.vel = vel;
+        this.vel = vel ?? { x: 0, y: 0 };
         this.color = color;
         this.size = 18;
         this.friction = 0.99;
