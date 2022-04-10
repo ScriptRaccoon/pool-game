@@ -1,25 +1,17 @@
-import { canvas } from "./canvas.js";
+import { canvas, margin } from "./canvas.js";
 import { Pocket } from "./Pocket.js";
 
 export function setupPockets() {
-    const edgeOffset = 3;
-    const sideOffset = 8;
+    const positions = [
+        { x: margin, y: margin },
+        { x: canvas.width / 2, y: margin },
+        { x: canvas.width - margin, y: margin },
+        { x: margin, y: canvas.height - margin },
+        { x: canvas.width / 2, y: canvas.height - margin },
+        { x: canvas.width - margin, y: canvas.height - margin },
+    ];
 
-    new Pocket({ pos: { x: edgeOffset, y: edgeOffset } });
-    new Pocket({ pos: { x: canvas.height, y: -sideOffset } });
-    new Pocket({
-        pos: { x: canvas.width - edgeOffset, y: edgeOffset },
-    });
-    new Pocket({
-        pos: {
-            x: canvas.width - edgeOffset,
-            y: canvas.height - edgeOffset,
-        },
-    });
-    new Pocket({
-        pos: { x: canvas.height, y: canvas.height + sideOffset },
-    });
-    new Pocket({
-        pos: { x: edgeOffset, y: canvas.height - edgeOffset },
+    positions.forEach((pos) => {
+        new Pocket({ pos });
     });
 }

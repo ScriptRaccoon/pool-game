@@ -1,5 +1,5 @@
 import { Ball } from "./Ball.js";
-import { clearCanvas } from "./canvas.js";
+import { clearCanvas, drawTable } from "./canvas.js";
 import { Controller } from "./Controller.js";
 import { Pocket } from "./Pocket.js";
 import { setupBalls } from "./setupBalls.js";
@@ -16,6 +16,7 @@ Ball.drawAll();
 
 function loop() {
     clearCanvas();
+    drawTable();
     Ball.updateAll();
     Pocket.drawAll();
     Ball.drawAll();

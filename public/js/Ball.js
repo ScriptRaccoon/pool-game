@@ -1,4 +1,4 @@
-import { canvas, ctx } from "./canvas.js";
+import { canvas, ctx, margin } from "./canvas.js";
 import { Pocket } from "./Pocket.js";
 import { endMessage, state, writeStatus } from "./state.js";
 import { distance, norm } from "./utils.js";
@@ -132,19 +132,19 @@ export class Ball {
     bounceOfWalls() {
         const bounceFriction = 0.8;
         // horizontal
-        if (this.pos.x + this.size >= canvas.width) {
-            this.pos.x = canvas.width - this.size;
+        if (this.pos.x + this.size >= canvas.width - margin) {
+            this.pos.x = canvas.width - this.size - margin;
             this.vel.x *= -bounceFriction;
-        } else if (this.pos.x - this.size <= 0) {
-            this.pos.x = this.size;
+        } else if (this.pos.x - this.size <= margin) {
+            this.pos.x = this.size + margin;
             this.vel.x *= -bounceFriction;
         }
         // vertical
-        if (this.pos.y + this.size >= canvas.height) {
-            this.pos.y = canvas.height - this.size;
+        if (this.pos.y + this.size >= canvas.height - margin) {
+            this.pos.y = canvas.height - this.size - margin;
             this.vel.y *= -bounceFriction;
-        } else if (this.pos.y - this.size <= 0) {
-            this.pos.y = this.size;
+        } else if (this.pos.y - this.size <= margin) {
+            this.pos.y = this.size + margin;
             this.vel.y *= -bounceFriction;
         }
     }
