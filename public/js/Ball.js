@@ -82,7 +82,7 @@ export class Ball {
         Ball.list.forEach((ball) => {
             if (ball == this) return;
             if (this.intersects(ball)) {
-                const factor = 0.015 * norm(this.vel);
+                const factor = 0.008 * norm(this.vel);
                 ball.vel.x += factor * (ball.pos.x - this.pos.x);
                 ball.vel.y += factor * (ball.pos.y - this.pos.y);
                 const factor2 = 0.004 * norm(this.vel);
