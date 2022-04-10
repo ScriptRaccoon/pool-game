@@ -19,6 +19,7 @@ export function clearCanvas() {
 export function drawTable() {
     drawWood();
     drawMountings();
+    drawPaddings();
 }
 
 function drawWood() {
@@ -229,5 +230,94 @@ function drawMountings() {
         canvas.height - (margin - width / 2)
     );
     ctx.stroke();
+    ctx.closePath();
+}
+
+function drawPaddings() {
+    const width = 20;
+    ctx.fillStyle = "rgb(0,90,15)";
+    // top left
+    ctx.beginPath();
+    ctx.moveTo(margin + pocketSize, margin);
+    ctx.lineTo(margin + pocketSize + width, margin + width);
+    ctx.lineTo(canvas.width / 2 - pocketSize - width, margin + width);
+    ctx.lineTo(canvas.width / 2 - pocketSize, margin);
+    ctx.lineTo(margin + pocketSize, margin);
+    ctx.fill();
+    ctx.closePath();
+    // bottom left
+    ctx.beginPath();
+    ctx.moveTo(margin + pocketSize, canvas.height - margin);
+    ctx.lineTo(
+        margin + pocketSize + width,
+        canvas.height - (margin + width)
+    );
+    ctx.lineTo(
+        canvas.width / 2 - pocketSize - width,
+        canvas.height - (margin + width)
+    );
+    ctx.lineTo(canvas.width / 2 - pocketSize, canvas.height - margin);
+    ctx.lineTo(margin + pocketSize, canvas.height - margin);
+    ctx.fill();
+    ctx.closePath();
+    // top right
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2 + pocketSize, margin);
+    ctx.lineTo(canvas.width / 2 + pocketSize + width, margin + width);
+    ctx.lineTo(
+        canvas.width - pocketSize - margin - width,
+        margin + width
+    );
+    ctx.lineTo(canvas.width - pocketSize - margin, margin);
+    ctx.lineTo(canvas.width / 2 + pocketSize, margin);
+    ctx.fill();
+    ctx.closePath();
+    // bottom right
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2 + pocketSize, canvas.height - margin);
+    ctx.lineTo(
+        canvas.width / 2 + pocketSize + width,
+        canvas.height - (margin + width)
+    );
+    ctx.lineTo(
+        canvas.width - pocketSize - margin - width,
+        canvas.height - (margin + width)
+    );
+    ctx.lineTo(
+        canvas.width - pocketSize - margin,
+        canvas.height - margin
+    );
+    ctx.lineTo(canvas.width / 2 + pocketSize, canvas.height - margin);
+    ctx.fill();
+    ctx.closePath();
+    // side left
+    ctx.beginPath();
+    ctx.moveTo(margin, margin + pocketSize);
+    ctx.lineTo(margin + width, margin + pocketSize + width);
+    ctx.lineTo(
+        margin + width,
+        canvas.height - margin - width - pocketSize
+    );
+    ctx.lineTo(margin, canvas.height - margin - pocketSize);
+    ctx.lineTo(margin, margin + pocketSize);
+    ctx.fill();
+    ctx.closePath();
+    // side right
+    ctx.beginPath();
+    ctx.moveTo(canvas.width - margin, margin + pocketSize);
+    ctx.lineTo(
+        canvas.width - (margin + width),
+        margin + pocketSize + width
+    );
+    ctx.lineTo(
+        canvas.width - (margin + width),
+        canvas.height - margin - width - pocketSize
+    );
+    ctx.lineTo(
+        canvas.width - margin,
+        canvas.height - margin - pocketSize
+    );
+    ctx.lineTo(canvas.width - margin, margin + pocketSize);
+    ctx.fill();
     ctx.closePath();
 }
