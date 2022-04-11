@@ -6,27 +6,25 @@
     box-sizing: border-box;
 }
 
-:root {
-    --color-green: rgb(26, 130, 26);
-}
 
 body {
     background-color: #111;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+    position: relative;
+
 }
 
 /* canvas */
 
 canvas {
-    box-sizing: content-box;
-    display: block;
-    background-color: var(--color-green);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     border-radius: 55px;
+
 }
 
 /* popup */
@@ -51,8 +49,10 @@ dialog {
 /* menu */
 
 menu {
-    color: white;
-    padding-bottom: 40px;
+    padding: 30px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 button {
@@ -62,7 +62,7 @@ button {
     font-size: inherit;
     color: white;
     font-size: 20px;
-    background-color: var(--color-green);
+    background-color: green;
     padding: 5px 12px; 
     border-radius: 10px;
     cursor: pointer;

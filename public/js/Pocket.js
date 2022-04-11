@@ -1,4 +1,4 @@
-import { ctx } from "./canvas.js";
+import { tctx } from "./canvas.js";
 import { pocketSize } from "./setupPolygons.js";
 import { distance } from "./utils.js";
 
@@ -12,7 +12,7 @@ export class Pocket {
     constructor({ pos }) {
         this.pos = pos;
         this.size = pocketSize;
-        this.gradient = ctx.createRadialGradient(
+        this.gradient = tctx.createRadialGradient(
             this.pos.x,
             this.pos.y,
             0,
@@ -26,11 +26,11 @@ export class Pocket {
     }
 
     draw() {
-        ctx.fillStyle = this.gradient;
-        ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, this.size, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
+        tctx.fillStyle = this.gradient;
+        tctx.beginPath();
+        tctx.arc(this.pos.x, this.pos.y, this.size, 0, 2 * Math.PI);
+        tctx.fill();
+        tctx.closePath();
     }
 
     includes(ball) {

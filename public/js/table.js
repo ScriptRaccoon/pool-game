@@ -1,9 +1,22 @@
-import { canvas, canvasNorm, ctx, margin } from "./canvas.js";
-import { pocketSize } from "./setupPolygons.js";
+import { canvas, tctx, margin } from "./canvas.js";
+import { Pocket } from "./Pocket.js";
+import { Polygon } from "./Polygon.js";
+import { setupPockets } from "./setupPockets.js";
+import { pocketSize, setupPolygons } from "./setupPolygons.js";
 
 export function drawTable() {
+    drawCloth();
     drawWood();
     drawMountings();
+    setupPockets();
+    Pocket.drawAll();
+    setupPolygons();
+    Polygon.drawAll();
+}
+
+function drawCloth() {
+    tctx.fillStyle = "rgb(26, 130, 26)";
+    tctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function drawWood() {
@@ -11,10 +24,10 @@ function drawWood() {
     function setupGradient() {
         gradient.addColorStop(0, "hsl(16, 76%, 10%)");
         gradient.addColorStop(1, "hsl(16, 76%, 30%)");
-        ctx.fillStyle = gradient;
+        tctx.fillStyle = gradient;
     }
     // top left corner
-    gradient = ctx.createRadialGradient(
+    gradient = tctx.createRadialGradient(
         margin,
         margin,
         margin,
@@ -23,9 +36,9 @@ function drawWood() {
         0
     );
     setupGradient();
-    ctx.fillRect(0, 0, margin, margin);
+    tctx.fillRect(0, 0, margin, margin);
     // top right corner
-    gradient = ctx.createRadialGradient(
+    gradient = tctx.createRadialGradient(
         canvas.width - margin,
         margin,
         margin,
@@ -34,9 +47,9 @@ function drawWood() {
         0
     );
     setupGradient();
-    ctx.fillRect(canvas.width - margin, 0, margin, margin);
+    tctx.fillRect(canvas.width - margin, 0, margin, margin);
     // bottom left corner
-    gradient = ctx.createRadialGradient(
+    gradient = tctx.createRadialGradient(
         margin,
         canvas.height - margin,
         margin,
@@ -45,9 +58,9 @@ function drawWood() {
         0
     );
     setupGradient();
-    ctx.fillRect(0, canvas.height - margin, margin, margin);
+    tctx.fillRect(0, canvas.height - margin, margin, margin);
     // bottom right corner
-    gradient = ctx.createRadialGradient(
+    gradient = tctx.createRadialGradient(
         canvas.width - margin,
         canvas.height - margin,
         margin,
@@ -56,19 +69,19 @@ function drawWood() {
         0
     );
     setupGradient();
-    ctx.fillRect(
+    tctx.fillRect(
         canvas.width - margin,
         canvas.height - margin,
         margin,
         margin
     );
     // top side
-    gradient = ctx.createLinearGradient(0, 0, 0, margin);
+    gradient = tctx.createLinearGradient(0, 0, 0, margin);
     setupGradient();
 
-    ctx.fillRect(margin, 0, canvas.width - 2 * margin, margin);
+    tctx.fillRect(margin, 0, canvas.width - 2 * margin, margin);
     // bottom side
-    gradient = ctx.createLinearGradient(
+    gradient = tctx.createLinearGradient(
         0,
         canvas.height,
         0,
@@ -76,19 +89,19 @@ function drawWood() {
     );
     setupGradient();
 
-    ctx.fillRect(
+    tctx.fillRect(
         margin,
         canvas.height - margin,
         canvas.width - 2 * margin,
         margin
     );
     // left side
-    gradient = ctx.createLinearGradient(0, 0, margin, 0);
+    gradient = tctx.createLinearGradient(0, 0, margin, 0);
     setupGradient();
 
-    ctx.fillRect(0, margin, margin, canvas.height - 2 * margin);
+    tctx.fillRect(0, margin, margin, canvas.height - 2 * margin);
     // right side
-    gradient = ctx.createLinearGradient(
+    gradient = tctx.createLinearGradient(
         canvas.width,
         0,
         canvas.width - margin,
@@ -96,7 +109,7 @@ function drawWood() {
     );
     setupGradient();
 
-    ctx.fillRect(
+    tctx.fillRect(
         canvas.width - margin,
         margin,
         canvas.width,
@@ -106,200 +119,200 @@ function drawWood() {
 
 function drawMountings() {
     const width = 10;
-    ctx.lineWidth = width;
-    ctx.strokeStyle = "orange";
+    tctx.lineWidth = width;
+    tctx.strokeStyle = "orange";
 
     // round parts
 
-    ctx.lineCap = "butt";
+    tctx.lineCap = "butt";
     const d = 0.05;
 
     // rounding top left
-    ctx.beginPath();
-    ctx.arc(
+    tctx.beginPath();
+    tctx.arc(
         margin,
         margin,
         pocketSize + width / 2,
         (0.5 + d) * Math.PI,
         (2 - d) * Math.PI
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // rounding bottom left
-    ctx.beginPath();
-    ctx.arc(
+    tctx.beginPath();
+    tctx.arc(
         margin,
         canvas.height - margin,
         pocketSize + width / 2,
         d * Math.PI,
         (1.5 - d) * Math.PI
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // rounding top middle
-    ctx.beginPath();
-    ctx.arc(
+    tctx.beginPath();
+    tctx.arc(
         canvas.width / 2,
         margin,
         pocketSize + width / 2,
         (1 + d) * Math.PI,
         (2 - d) * Math.PI
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // rounding bottom middle
-    ctx.beginPath();
-    ctx.arc(
+    tctx.beginPath();
+    tctx.arc(
         canvas.width / 2,
         canvas.height - margin,
         pocketSize + width / 2,
         d * Math.PI,
         (-1 - d) * Math.PI
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // rounding top right
-    ctx.beginPath();
-    ctx.arc(
+    tctx.beginPath();
+    tctx.arc(
         canvas.width - margin,
         margin,
         pocketSize + width / 2,
         (1 + d) * Math.PI,
         (2.5 - d) * Math.PI
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // rounding bottom right
-    ctx.beginPath();
-    ctx.arc(
+    tctx.beginPath();
+    tctx.arc(
         canvas.width - margin,
         canvas.height - margin,
         pocketSize + width / 2,
         (-0.5 + d) * Math.PI,
         (1 - d) * Math.PI
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // lines
 
     const overflow = 50;
-    ctx.lineCap = "round";
+    tctx.lineCap = "round";
 
     // lines top left
-    ctx.beginPath();
-    ctx.moveTo(margin - width / 2, margin + pocketSize + overflow);
-    ctx.lineTo(margin - width / 2, margin + pocketSize);
-    ctx.stroke();
-    ctx.moveTo(margin + pocketSize, margin - width / 2);
-    ctx.lineTo(margin + pocketSize + overflow, margin - width / 2);
-    ctx.stroke();
-    ctx.closePath();
+    tctx.beginPath();
+    tctx.moveTo(margin - width / 2, margin + pocketSize + overflow);
+    tctx.lineTo(margin - width / 2, margin + pocketSize);
+    tctx.stroke();
+    tctx.moveTo(margin + pocketSize, margin - width / 2);
+    tctx.lineTo(margin + pocketSize + overflow, margin - width / 2);
+    tctx.stroke();
+    tctx.closePath();
 
     // lines bottom left
-    ctx.beginPath();
-    ctx.moveTo(
+    tctx.beginPath();
+    tctx.moveTo(
         margin - width / 2,
         canvas.height - (margin + pocketSize + overflow)
     );
-    ctx.lineTo(
+    tctx.lineTo(
         margin - width / 2,
         canvas.height - (margin + pocketSize)
     );
-    ctx.moveTo(
+    tctx.moveTo(
         margin + pocketSize,
         canvas.height - margin + width / 2
     );
-    ctx.lineTo(
+    tctx.lineTo(
         margin + pocketSize + overflow,
         canvas.height - margin + width / 2
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // lines top right
-    ctx.beginPath();
-    ctx.moveTo(
+    tctx.beginPath();
+    tctx.moveTo(
         canvas.width - (margin - width / 2),
         margin + pocketSize + overflow
     );
-    ctx.lineTo(
+    tctx.lineTo(
         canvas.width - (margin - width / 2),
         margin + pocketSize
     );
-    ctx.stroke();
-    ctx.moveTo(
+    tctx.stroke();
+    tctx.moveTo(
         canvas.width - (margin + pocketSize),
         margin - width / 2
     );
-    ctx.lineTo(
+    tctx.lineTo(
         canvas.width - (margin + pocketSize + overflow),
         margin - width / 2
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // lines bottom right
-    ctx.beginPath();
-    ctx.moveTo(
+    tctx.beginPath();
+    tctx.moveTo(
         canvas.width - (margin - width / 2),
         canvas.height - (margin + pocketSize + overflow)
     );
-    ctx.lineTo(
+    tctx.lineTo(
         canvas.width - (margin - width / 2),
         canvas.height - (margin + pocketSize)
     );
-    ctx.moveTo(
+    tctx.moveTo(
         canvas.width - (margin + pocketSize),
         canvas.height - margin + width / 2
     );
-    ctx.lineTo(
+    tctx.lineTo(
         canvas.width - (margin + pocketSize + overflow),
         canvas.height - margin + width / 2
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // lines top middle
-    ctx.beginPath();
-    ctx.moveTo(
+    tctx.beginPath();
+    tctx.moveTo(
         canvas.width / 2 - pocketSize - overflow,
         margin - width / 2
     );
-    ctx.lineTo(canvas.width / 2 - pocketSize, margin - width / 2);
-    ctx.stroke();
-    ctx.moveTo(canvas.width / 2 + pocketSize, margin - width / 2);
-    ctx.lineTo(
+    tctx.lineTo(canvas.width / 2 - pocketSize, margin - width / 2);
+    tctx.stroke();
+    tctx.moveTo(canvas.width / 2 + pocketSize, margin - width / 2);
+    tctx.lineTo(
         canvas.width / 2 + pocketSize + overflow,
         margin - width / 2
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 
     // lines bottom middle
-    ctx.beginPath();
-    ctx.moveTo(
+    tctx.beginPath();
+    tctx.moveTo(
         canvas.width / 2 - pocketSize - overflow,
         canvas.height - (margin - width / 2)
     );
-    ctx.lineTo(
+    tctx.lineTo(
         canvas.width / 2 - pocketSize,
         canvas.height - (margin - width / 2)
     );
-    ctx.stroke();
-    ctx.moveTo(
+    tctx.stroke();
+    tctx.moveTo(
         canvas.width / 2 + pocketSize,
         canvas.height - (margin - width / 2)
     );
-    ctx.lineTo(
+    tctx.lineTo(
         canvas.width / 2 + pocketSize + overflow,
         canvas.height - (margin - width / 2)
     );
-    ctx.stroke();
-    ctx.closePath();
+    tctx.stroke();
+    tctx.closePath();
 }

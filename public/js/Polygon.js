@@ -1,4 +1,4 @@
-import { ctx } from "./canvas.js";
+import { tctx } from "./canvas.js";
 import { solveRealQuadratic } from "./utils.js";
 
 export class Polygon {
@@ -15,15 +15,15 @@ export class Polygon {
     }
 
     draw() {
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.moveTo(this.coords[0].x, this.coords[0].y);
+        tctx.lineWidth = 3;
+        tctx.beginPath();
+        tctx.moveTo(this.coords[0].x, this.coords[0].y);
         for (let i = 1; i < this.coords.length; i++) {
-            ctx.lineTo(this.coords[i].x, this.coords[i].y);
+            tctx.lineTo(this.coords[i].x, this.coords[i].y);
         }
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
+        tctx.fillStyle = this.color;
+        tctx.fill();
+        tctx.closePath();
     }
 
     intersectsWith(circle) {
