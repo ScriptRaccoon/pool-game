@@ -1,4 +1,5 @@
 import { canvas, ctx, margin } from "./canvas.js";
+import { Line } from "./Line.js";
 import { Pocket } from "./Pocket.js";
 import { endMessage, state, writeStatus } from "./state.js";
 import { distance, norm } from "./utils.js";
@@ -75,9 +76,20 @@ export class Ball {
         this.vel.x *= this.friction;
         this.vel.y *= this.friction;
         this.pushBalls();
+        this.bounceOfLines();
         this.bounceOfWalls();
         this.handleTinyVelocity();
         this.checkPockets();
+    }
+
+    bounceOfLines() {
+        Line.list.forEach((line) => {
+            if (line.intersectsWith(this)) {
+                // TODO: rotate velocity vector
+                this.vel.x = 0;
+                this.vel.y = 0;
+            }
+        });
     }
 
     checkPockets() {

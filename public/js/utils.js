@@ -26,3 +26,10 @@ export function mousePos(e, canvas) {
         y: (e.clientY - rect.top) * (canvas.height / rect.height),
     };
 }
+
+export function solveRealQuadratic(a, b, c) {
+    const discriminant = b * b - 4 * a * c;
+    if (discriminant < 0) return [];
+    const root = Math.sqrt(discriminant);
+    return [(-b + root) / (2 * a), (-b + root) / (2 * a)];
+}
