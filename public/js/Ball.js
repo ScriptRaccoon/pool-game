@@ -84,9 +84,9 @@ export class Ball {
         this.vel.y *= this.friction;
         this.pushBalls();
         this.bounceOfWalls();
+        this.bounceOffPolygons();
         this.handleTinyVelocity();
         this.checkPockets();
-        this.bounceOffPolygons();
     }
 
     bounceOffPolygons() {

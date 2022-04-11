@@ -23,9 +23,9 @@ Polygon.drawAll();
 function loop() {
     clearCanvas();
     drawTable();
+    Pocket.drawAll();
     Polygon.drawAll();
     Ball.updateAll();
-    Pocket.drawAll();
     Ball.drawAll();
     controller.active = Ball.idle && state.playing;
     controller.draw();
