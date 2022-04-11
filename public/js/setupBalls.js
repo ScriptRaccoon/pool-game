@@ -1,5 +1,5 @@
 import { Ball } from "./Ball.js";
-import { margin } from "./canvas.js";
+import { canvas, margin } from "./canvas.js";
 
 const COLORS = {
     YELLOW: "rgb(255,215,0)",
@@ -18,7 +18,13 @@ export function setupBalls() {
         y: 19,
     };
 
-    const start = { x: 850, y: 300 + margin };
+    const start = {
+        x:
+            canvas.width -
+            margin -
+            (1 / 4) * (canvas.width - 2 * margin),
+        y: 300 + margin,
+    };
 
     new Ball({
         pos: { x: start.x, y: start.y },

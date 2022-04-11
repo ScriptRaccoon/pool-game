@@ -212,6 +212,9 @@ export class Ball {
 }
 
 export const whiteBall = new Ball({
-    pos: { x: 200, y: 300 + margin },
+    pos: {
+        x: margin + (1 / 4) * (canvas.width - 2 * margin),
+        y: 300 + margin,
+    },
     color: "white",
 });
