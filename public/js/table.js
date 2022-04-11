@@ -1,4 +1,4 @@
-import { canvas, ctx, margin } from "./canvas.js";
+import { canvas, canvasNorm, ctx, margin } from "./canvas.js";
 import { pocketSize } from "./setupPolygons.js";
 
 export function drawTable() {
@@ -7,13 +7,100 @@ export function drawTable() {
 }
 
 function drawWood() {
-    ctx.strokeStyle = "rgb(110, 40, 15)";
-    ctx.lineWidth = margin;
-    ctx.strokeRect(
-        margin / 2,
-        margin / 2,
+    let gradient;
+    function setupGradient() {
+        gradient.addColorStop(0, "hsl(16, 76%, 10%)");
+        gradient.addColorStop(1, "hsl(16, 76%, 30%)");
+        ctx.fillStyle = gradient;
+    }
+    // top left corner
+    gradient = ctx.createRadialGradient(
+        margin,
+        margin,
+        margin,
+        margin,
+        margin,
+        0
+    );
+    setupGradient();
+    ctx.fillRect(0, 0, margin, margin);
+    // top right corner
+    gradient = ctx.createRadialGradient(
         canvas.width - margin,
+        margin,
+        margin,
+        canvas.width - margin,
+        margin,
+        0
+    );
+    setupGradient();
+    ctx.fillRect(canvas.width - margin, 0, margin, margin);
+    // bottom left corner
+    gradient = ctx.createRadialGradient(
+        margin,
+        canvas.height - margin,
+        margin,
+        margin,
+        canvas.height - margin,
+        0
+    );
+    setupGradient();
+    ctx.fillRect(0, canvas.height - margin, margin, margin);
+    // bottom right corner
+    gradient = ctx.createRadialGradient(
+        canvas.width - margin,
+        canvas.height - margin,
+        margin,
+        canvas.width - margin,
+        canvas.height - margin,
+        0
+    );
+    setupGradient();
+    ctx.fillRect(
+        canvas.width - margin,
+        canvas.height - margin,
+        margin,
+        margin
+    );
+    // top side
+    gradient = ctx.createLinearGradient(0, 0, 0, margin);
+    setupGradient();
+
+    ctx.fillRect(margin, 0, canvas.width - 2 * margin, margin);
+    // bottom side
+    gradient = ctx.createLinearGradient(
+        0,
+        canvas.height,
+        0,
         canvas.height - margin
+    );
+    setupGradient();
+
+    ctx.fillRect(
+        margin,
+        canvas.height - margin,
+        canvas.width - 2 * margin,
+        margin
+    );
+    // left side
+    gradient = ctx.createLinearGradient(0, 0, margin, 0);
+    setupGradient();
+
+    ctx.fillRect(0, margin, margin, canvas.height - 2 * margin);
+    // right side
+    gradient = ctx.createLinearGradient(
+        canvas.width,
+        0,
+        canvas.width - margin,
+        0
+    );
+    setupGradient();
+
+    ctx.fillRect(
+        canvas.width - margin,
+        margin,
+        canvas.width,
+        canvas.height - 2 * margin
     );
 }
 

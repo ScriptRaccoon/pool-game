@@ -12,11 +12,21 @@ export class Pocket {
     constructor({ pos }) {
         this.pos = pos;
         this.size = pocketSize;
+        this.gradient = ctx.createRadialGradient(
+            this.pos.x,
+            this.pos.y,
+            0,
+            this.pos.x,
+            this.pos.y,
+            this.size
+        );
+        this.gradient.addColorStop(0.5, "#151515");
+        this.gradient.addColorStop(1, "#000");
         Pocket.list.push(this);
     }
 
     draw() {
-        ctx.fillStyle = "#000";
+        ctx.fillStyle = this.gradient;
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.size, 0, 2 * Math.PI);
         ctx.fill();
