@@ -42,16 +42,30 @@ export class Ball {
         this.debugSpeed = 1;
 
         this.gradient = ctx.createRadialGradient(
-            -0.35 * this.size,
-            -0.35 * this.size,
+            -0.4 * this.size,
+            -0.4 * this.size,
             1,
             0,
             0,
             this.size
         );
 
-        this.gradient.addColorStop(0, "rgba(255,255,255,0.35)");
-        this.gradient.addColorStop(1, "transparent");
+        this.gradient.addColorStop(0, "rgba(255,255,255,0.25)");
+        this.gradient.addColorStop(0.4, "rgba(255,255,255,0)");
+        this.gradient.addColorStop(0.7, "rgba(0,0,0,0)");
+        this.gradient.addColorStop(1, "rgba(0,0,0,0.3)");
+
+        this.shadowGradient = ctx.createRadialGradient(
+            0.4 * this.size,
+            0.4 * this.size,
+            1,
+            0,
+            0,
+            this.size * 1.5
+        );
+
+        this.shadowGradient.addColorStop(0, "red");
+        this.shadowGradient.addColorStop(1, "blue");
 
         this.inPocket = false;
 
@@ -60,12 +74,30 @@ export class Ball {
 
     draw() {
         if (this.inPocket) return;
+        const shadowFactor = {
+            x: ((this.pos.x - canvas.width / 2) / canvas.width) * 0.5,
+            y: 0.15,
+        };
         ctx.save();
         ctx.translate(this.pos.x, this.pos.y);
+        // ball shadow
+        ctx.beginPath();
+        ctx.arc(
+            this.size * shadowFactor.x,
+            this.size * shadowFactor.y,
+            this.size,
+            0,
+            2 * Math.PI
+        );
+        ctx.fillStyle = "rgba(0,0,0,0.15)";
+        ctx.fill();
+        ctx.closePath();
+        // regular ball
         ctx.beginPath();
         ctx.arc(0, 0, this.size, 0, 2 * Math.PI);
         ctx.fillStyle = this.color;
         ctx.fill();
+        // light effects on ball
         ctx.fillStyle = this.gradient;
         ctx.fill();
         ctx.closePath();
