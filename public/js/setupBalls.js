@@ -1,4 +1,5 @@
 import { Ball } from "./Ball.js";
+import { margin } from "./canvas.js";
 
 export function setupBalls() {
     const step = {
@@ -6,7 +7,7 @@ export function setupBalls() {
         y: 19,
     };
 
-    const start = { x: 850, y: 300 };
+    const start = { x: 850, y: 300 + margin };
 
     new Ball({
         pos: { x: start.x, y: start.y },

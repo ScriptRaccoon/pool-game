@@ -1,8 +1,14 @@
 import { canvas, ctx, margin } from "./canvas.js";
-import { Line } from "./Line.js";
 import { Pocket } from "./Pocket.js";
+import { Polygon } from "./Polygon.js";
 import { endMessage, state, writeStatus } from "./state.js";
-import { distance, norm } from "./utils.js";
+import {
+    angleBetween,
+    sub,
+    distance,
+    norm,
+    rotate,
+} from "./utils.js";
 
 export class Ball {
     static list = [];
@@ -33,6 +39,7 @@ export class Ball {
         this.color = color;
         this.size = 18;
         this.friction = 0.99;
+        this.debugSpeed = 1;
 
         this.gradient = ctx.createRadialGradient(
             -0.35 * this.size,
@@ -71,23 +78,27 @@ export class Ball {
 
     update() {
         if (this.idle || this.inPocket) return;
-        this.pos.x += this.vel.x;
-        this.pos.y += this.vel.y;
+        this.pos.x += this.debugSpeed * this.vel.x;
+        this.pos.y += this.debugSpeed * this.vel.y;
         this.vel.x *= this.friction;
         this.vel.y *= this.friction;
         this.pushBalls();
-        this.bounceOfLines();
         this.bounceOfWalls();
         this.handleTinyVelocity();
         this.checkPockets();
+        this.bounceOffPolygons();
     }
 
-    bounceOfLines() {
-        Line.list.forEach((line) => {
-            if (line.intersectsWith(this)) {
-                // TODO: rotate velocity vector
-                this.vel.x = 0;
-                this.vel.y = 0;
+    bounceOffPolygons() {
+        Polygon.list.forEach((polygon) => {
+            const i = polygon.intersectsWith(this);
+            if (i !== false) {
+                const start = polygon.coords[i];
+                const end = polygon.coords[i + 1];
+                const vector = sub(end, start);
+                const angle = angleBetween(this.vel, vector);
+                const newVel = rotate(2 * angle, this.vel);
+                this.vel = newVel;
             }
         });
     }
@@ -169,6 +180,6 @@ export class Ball {
 }
 
 export const whiteBall = new Ball({
-    pos: { x: 200, y: 300 },
+    pos: { x: 200, y: 300 + margin },
     color: "white",
 });

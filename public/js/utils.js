@@ -19,6 +19,21 @@ export function scale(r, v) {
     return { x: r * v.x, y: r * v.y };
 }
 
+export function rotate(alpha, v) {
+    return {
+        x: v.x * Math.cos(alpha) - v.y * Math.sin(alpha),
+        y: v.x * Math.sin(alpha) + v.y * Math.cos(alpha),
+    };
+}
+
+function dotProduct(v, w) {
+    return v.x * w.x + v.y * w.y;
+}
+
+export function angleBetween(v, w) {
+    return Math.acos(dotProduct(v, w) / (norm(v) * norm(w)));
+}
+
 export function mousePos(e, canvas) {
     const rect = canvas.getBoundingClientRect();
     return {
