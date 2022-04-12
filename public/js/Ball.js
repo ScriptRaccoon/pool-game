@@ -1,6 +1,7 @@
 import { canvas, ctx, margin } from "./canvas.js";
 import { Pocket } from "./Pocket.js";
 import { Polygon } from "./Polygon.js";
+import { blackBall, whiteBall } from "./setupBalls.js";
 import { endMessage, state, writeStatus } from "./state.js";
 import {
     angleBetween,
@@ -15,10 +16,21 @@ export class Ball {
     static idle = true;
 
     static updateAll() {
+        if (!state.playing) return;
         Ball.list.forEach((b) => b.update());
         Ball.idle = Ball.list.every((b) => b.idle || b.inPocket);
-        if (Ball.idle && whiteBall.inPocket) {
-            whiteBall.reset();
+        if (Ball.idle) {
+            if (blackBall.inPocket) {
+                state.won =
+                    !whiteBall.inPocket &&
+                    Ball.list.every(
+                        (ball) => ball == whiteBall || ball.inPocket
+                    );
+                state.playing = false;
+                writeStatus(endMessage());
+            } else if (whiteBall.inPocket) {
+                whiteBall.reset();
+            }
         }
     }
 
@@ -30,12 +42,11 @@ export class Ball {
         Ball.list.forEach((b) => b.reset());
     }
 
-    constructor({ pos, color, vel, isBlack }) {
+    constructor({ pos, color, vel }) {
         this.pos = pos;
         this.originalPos = { ...pos };
         this.vel = vel ?? { x: 0, y: 0 };
         this.originalVel = { ...this.vel };
-        this.isBlack = isBlack ?? false;
         this.color = color;
         this.size = 18;
         this.friction = 0.99;
@@ -132,16 +143,6 @@ export class Ball {
         Pocket.list.forEach((pocket) => {
             if (pocket.includes(this)) {
                 this.inPocket = true;
-                if (this.isBlack) {
-                    state.won = Ball.list.every(
-                        (ball) =>
-                            ball == whiteBall ||
-                            ball == this ||
-                            ball.inPocket
-                    );
-                    state.playing = false;
-                    writeStatus(endMessage());
-                }
                 return;
             }
         });
@@ -202,11 +203,3 @@ export class Ball {
         this.vel = { ...this.originalVel };
     }
 }
-
-export const whiteBall = new Ball({
-    pos: {
-        x: margin + (1 / 4) * (canvas.width - 2 * margin),
-        y: 300 + margin,
-    },
-    color: "white",
-});

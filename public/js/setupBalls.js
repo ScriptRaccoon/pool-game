@@ -7,10 +7,14 @@ const COLORS = {
     RED: "rgb(230,10,10)",
     PURPLE: "rgb(90,0,170)",
     BLACK: "rgb(0,0,0)",
+    WHITE: "rgb(210,210,210)",
     ORANGE: "rgb(255, 120, 0)",
     GREEN: "rgb(0,90,0)",
     BROWN: "rgb(150,20,0)",
 };
+
+export let whiteBall;
+export let blackBall;
 
 export function setupBalls() {
     const step = {
@@ -25,6 +29,14 @@ export function setupBalls() {
             (1 / 4) * (canvas.width - 2 * margin),
         y: 300 + margin,
     };
+
+    whiteBall = new Ball({
+        pos: {
+            x: margin + (1 / 4) * (canvas.width - 2 * margin),
+            y: 300 + margin,
+        },
+        color: COLORS.WHITE,
+    });
 
     new Ball({
         pos: { x: start.x, y: start.y },
@@ -61,10 +73,9 @@ export function setupBalls() {
         color: COLORS.BROWN,
     });
 
-    new Ball({
+    blackBall = new Ball({
         pos: { x: start.x + 3 * step.x, y: start.y - 1 * step.y },
         color: COLORS.BLACK,
-        isBlack: true,
     });
 
     new Ball({

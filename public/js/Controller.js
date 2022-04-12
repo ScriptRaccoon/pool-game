@@ -1,6 +1,7 @@
-import { Ball, whiteBall } from "./Ball.js";
+import { Ball } from "./Ball.js";
 import { ctx, canvas, canvasNorm } from "./canvas.js";
 import { mouse } from "./mouse.js";
+import { whiteBall } from "./setupBalls.js";
 import { state } from "./state.js";
 import { sub, scale, normalize } from "./utils.js";
 
