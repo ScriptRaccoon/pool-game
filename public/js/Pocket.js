@@ -26,11 +26,15 @@ export class Pocket {
     }
 
     draw() {
+        tctx.save();
+        tctx.shadowBlur = 10;
+        tctx.shadowColor = "#000";
         tctx.fillStyle = this.gradient;
         tctx.beginPath();
         tctx.arc(this.pos.x, this.pos.y, this.size, 0, 2 * Math.PI);
         tctx.fill();
         tctx.closePath();
+        tctx.restore();
     }
 
     includes(ball) {
