@@ -2,6 +2,7 @@ import { norm } from "./utils.js";
 
 /** @type {HTMLCanvasElement} */
 export const canvas = document.getElementById("canvas");
+/** @type {HTMLCanvasElement} */
 export const tableCanvas = document.getElementById("tableCanvas");
 
 export const ctx = canvas.getContext("2d");

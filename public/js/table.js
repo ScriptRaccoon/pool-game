@@ -15,14 +15,14 @@ export function drawTable() {
 }
 
 function drawCloth() {
-    tctx.fillStyle = "rgb(26, 130, 26)";
+    tctx.fillStyle = "rgb(26, 130, 30)";
     tctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function drawWood() {
     let gradient;
     function setupGradient() {
-        gradient.addColorStop(0, "hsl(16, 76%, 10%)");
+        gradient.addColorStop(0, "hsl(16, 76%, 15%)");
         gradient.addColorStop(1, "hsl(16, 76%, 30%)");
         tctx.fillStyle = gradient;
     }
