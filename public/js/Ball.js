@@ -39,7 +39,6 @@ export class Ball {
         this.color = color;
         this.size = 18;
         this.friction = 0.99;
-        this.debugSpeed = 1;
         this.inPocket = false;
 
         this.gradient = ctx.createRadialGradient(
@@ -55,16 +54,23 @@ export class Ball {
         this.gradient.addColorStop(0.7, "rgba(0,0,0,0)");
         this.gradient.addColorStop(1, "rgba(0,0,0,0.3)");
 
+        this.alpha = 1;
+
         Ball.list.push(this);
     }
 
     draw() {
-        if (this.inPocket) return;
+        // pocket animation
+        if (this.alpha == 0) return;
+        if (this.inPocket) {
+            this.alpha = Math.max(0, this.alpha - 0.2);
+        }
         const shadowFactor = {
             x: ((this.pos.x - canvas.width / 2) / canvas.width) * 0.5,
             y: 0.15,
         };
         ctx.save();
+        ctx.globalAlpha = this.alpha;
         ctx.translate(this.pos.x, this.pos.y);
         // ball shadow
         ctx.beginPath();
@@ -95,11 +101,12 @@ export class Ball {
     }
 
     update() {
-        if (this.idle || this.inPocket) return;
-        this.pos.x += this.debugSpeed * this.vel.x;
-        this.pos.y += this.debugSpeed * this.vel.y;
+        if (this.idle) return;
+        this.pos.x += this.vel.x;
+        this.pos.y += this.vel.y;
         this.vel.x *= this.friction;
         this.vel.y *= this.friction;
+        if (this.inPocket) return;
         this.pushBalls();
         this.bounceOfWalls();
         this.bounceOffPolygons();
@@ -125,8 +132,6 @@ export class Ball {
         Pocket.list.forEach((pocket) => {
             if (pocket.includes(this)) {
                 this.inPocket = true;
-                this.vel.x = 0;
-                this.vel.y = 0;
                 if (this.isBlack) {
                     state.won = Ball.list.every(
                         (ball) =>
@@ -192,6 +197,7 @@ export class Ball {
 
     reset() {
         this.inPocket = false;
+        this.alpha = 1;
         this.pos = { ...this.originalPos };
         this.vel = { ...this.originalVel };
     }
