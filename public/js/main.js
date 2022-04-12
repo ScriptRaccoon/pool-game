@@ -16,7 +16,7 @@ function loop() {
     clearCanvas();
     Ball.updateAll();
     Ball.drawAll();
-    controller.active = Ball.idle && state.playing;
+    controller.update();
     controller.draw();
     requestAnimationFrame(loop);
 }

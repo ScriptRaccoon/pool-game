@@ -1,12 +1,12 @@
-import { whiteBall } from "./Ball.js";
+import { Ball, whiteBall } from "./Ball.js";
 import { ctx, canvas, canvasNorm } from "./canvas.js";
-import { mousePos, sub, scale, normalize } from "./utils.js";
+import { mouse } from "./mouse.js";
+import { state } from "./state.js";
+import { sub, scale, normalize } from "./utils.js";
 
 export class Controller {
     constructor() {
-        this.mouse = { x: 0, y: 0 };
         this.active = false;
-        this.followMouse();
         this.enableKlick();
     }
 
@@ -14,18 +14,13 @@ export class Controller {
         canvas.addEventListener("click", () => {
             if (!this.active) return;
             const factor = 0.1;
-            whiteBall.vel.x =
-                factor * (this.mouse.x - whiteBall.pos.x);
-            whiteBall.vel.y =
-                factor * (this.mouse.y - whiteBall.pos.y);
+            whiteBall.vel.x = factor * (mouse.x - whiteBall.pos.x);
+            whiteBall.vel.y = factor * (mouse.y - whiteBall.pos.y);
         });
     }
 
-    followMouse() {
-        window.addEventListener("mousemove", (e) => {
-            if (!this.active) return;
-            this.mouse = mousePos(e, canvas);
-        });
+    update() {
+        this.active = Ball.idle && state.playing;
     }
 
     draw() {
@@ -34,7 +29,7 @@ export class Controller {
         ctx.lineCap = "round";
         ctx.lineWidth = 10;
         ctx.strokeStyle = "rgba(255,255,255,0.5)";
-        const target = sub(this.mouse, whiteBall.pos);
+        const target = sub(mouse, whiteBall.pos);
         ctx.translate(whiteBall.pos.x, whiteBall.pos.y);
         ctx.beginPath();
         ctx.moveTo(0, 0);

@@ -34,14 +34,6 @@ export function angleBetween(v, w) {
     return Math.acos(dotProduct(v, w) / (norm(v) * norm(w)));
 }
 
-export function mousePos(e, canvas) {
-    const rect = canvas.getBoundingClientRect();
-    return {
-        x: (e.clientX - rect.left) * (canvas.width / rect.width),
-        y: (e.clientY - rect.top) * (canvas.height / rect.height),
-    };
-}
-
 export function solveRealQuadratic(a, b, c) {
     const discriminant = b * b - 4 * a * c;
     if (discriminant < 0) return [];
