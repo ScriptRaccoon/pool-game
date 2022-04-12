@@ -7,11 +7,11 @@ import { pocketSize, setupPolygons } from "./setupPolygons.js";
 export function drawTable() {
     drawCloth();
     drawWood();
-    drawMountings();
     setupPockets();
     Pocket.drawAll();
     setupPolygons();
     Polygon.drawAll();
+    drawMountings();
 }
 
 function drawCloth() {
@@ -26,7 +26,8 @@ function drawWood() {
         gradient.addColorStop(1, "hsl(16, 76%, 30%)");
         tctx.fillStyle = gradient;
     }
-    // top left corner
+
+    // wood top left corner
     gradient = tctx.createRadialGradient(
         margin,
         margin,
@@ -37,7 +38,8 @@ function drawWood() {
     );
     setupGradient();
     tctx.fillRect(0, 0, margin, margin);
-    // top right corner
+
+    // wood top right corner
     gradient = tctx.createRadialGradient(
         canvas.width - margin,
         margin,
@@ -48,7 +50,8 @@ function drawWood() {
     );
     setupGradient();
     tctx.fillRect(canvas.width - margin, 0, margin, margin);
-    // bottom left corner
+
+    // wood bottom left corner
     gradient = tctx.createRadialGradient(
         margin,
         canvas.height - margin,
@@ -59,7 +62,8 @@ function drawWood() {
     );
     setupGradient();
     tctx.fillRect(0, canvas.height - margin, margin, margin);
-    // bottom right corner
+
+    // wood bottom right corner
     gradient = tctx.createRadialGradient(
         canvas.width - margin,
         canvas.height - margin,
@@ -75,12 +79,13 @@ function drawWood() {
         margin,
         margin
     );
-    // top side
+
+    // wood top side
     gradient = tctx.createLinearGradient(0, 0, 0, margin);
     setupGradient();
-
     tctx.fillRect(margin, 0, canvas.width - 2 * margin, margin);
-    // bottom side
+
+    // wood bottom side
     gradient = tctx.createLinearGradient(
         0,
         canvas.height,
@@ -88,19 +93,19 @@ function drawWood() {
         canvas.height - margin
     );
     setupGradient();
-
     tctx.fillRect(
         margin,
         canvas.height - margin,
         canvas.width - 2 * margin,
         margin
     );
-    // left side
+
+    // wood left side
     gradient = tctx.createLinearGradient(0, 0, margin, 0);
     setupGradient();
-
     tctx.fillRect(0, margin, margin, canvas.height - 2 * margin);
-    // right side
+
+    // wood right side
     gradient = tctx.createLinearGradient(
         canvas.width,
         0,
@@ -108,7 +113,6 @@ function drawWood() {
         0
     );
     setupGradient();
-
     tctx.fillRect(
         canvas.width - margin,
         margin,
@@ -118,17 +122,19 @@ function drawWood() {
 }
 
 function drawMountings() {
+    tctx.save();
     const width = 10;
     tctx.lineWidth = width;
-    tctx.strokeStyle = "orange";
-
-    // round parts
-
-    tctx.lineCap = "butt";
+    tctx.strokeStyle = "rgb(230,180,0)";
+    tctx.lineCap = "round";
+    const overflow = 50;
     const d = 0.05;
+    tctx.shadowBlur = 10;
+    tctx.shadowColor = "rgb(255,200,0,0.25)";
 
-    // rounding top left
+    // mounting top left
     tctx.beginPath();
+    tctx.moveTo(margin - width / 2, margin + pocketSize + overflow);
     tctx.arc(
         margin,
         margin,
@@ -136,97 +142,23 @@ function drawMountings() {
         (0.5 + d) * Math.PI,
         (2 - d) * Math.PI
     );
-    tctx.stroke();
-    tctx.closePath();
-
-    // rounding bottom left
-    tctx.beginPath();
-    tctx.arc(
-        margin,
-        canvas.height - margin,
-        pocketSize + width / 2,
-        d * Math.PI,
-        (1.5 - d) * Math.PI
-    );
-    tctx.stroke();
-    tctx.closePath();
-
-    // rounding top middle
-    tctx.beginPath();
-    tctx.arc(
-        canvas.width / 2,
-        margin,
-        pocketSize + width / 2,
-        (1 + d) * Math.PI,
-        (2 - d) * Math.PI
-    );
-    tctx.stroke();
-    tctx.closePath();
-
-    // rounding bottom middle
-    tctx.beginPath();
-    tctx.arc(
-        canvas.width / 2,
-        canvas.height - margin,
-        pocketSize + width / 2,
-        d * Math.PI,
-        (-1 - d) * Math.PI
-    );
-    tctx.stroke();
-    tctx.closePath();
-
-    // rounding top right
-    tctx.beginPath();
-    tctx.arc(
-        canvas.width - margin,
-        margin,
-        pocketSize + width / 2,
-        (1 + d) * Math.PI,
-        (2.5 - d) * Math.PI
-    );
-    tctx.stroke();
-    tctx.closePath();
-
-    // rounding bottom right
-    tctx.beginPath();
-    tctx.arc(
-        canvas.width - margin,
-        canvas.height - margin,
-        pocketSize + width / 2,
-        (-0.5 + d) * Math.PI,
-        (1 - d) * Math.PI
-    );
-    tctx.stroke();
-    tctx.closePath();
-
-    // lines
-
-    const overflow = 50;
-    tctx.lineCap = "round";
-
-    // lines top left
-    tctx.beginPath();
-    tctx.moveTo(margin - width / 2, margin + pocketSize + overflow);
-    tctx.lineTo(margin - width / 2, margin + pocketSize);
-    tctx.stroke();
-    tctx.moveTo(margin + pocketSize, margin - width / 2);
     tctx.lineTo(margin + pocketSize + overflow, margin - width / 2);
     tctx.stroke();
     tctx.closePath();
 
-    // lines bottom left
+    // mounting bottom left
     tctx.beginPath();
     tctx.moveTo(
         margin - width / 2,
         canvas.height - (margin + pocketSize + overflow)
     );
-    tctx.lineTo(
-        margin - width / 2,
-        canvas.height - (margin + pocketSize)
-    );
-    tctx.moveTo(
-        margin + pocketSize,
-        canvas.height - margin + width / 2
+    tctx.arc(
+        margin,
+        canvas.height - margin,
+        pocketSize + width / 2,
+        (1.5 - d) * Math.PI,
+        d * Math.PI,
+        true
     );
     tctx.lineTo(
         margin + pocketSize + overflow,
@@ -235,20 +167,60 @@ function drawMountings() {
     tctx.stroke();
     tctx.closePath();
 
-    // lines top right
+    // mounting top middle
+    tctx.beginPath();
+    tctx.moveTo(
+        canvas.width / 2 - pocketSize - overflow,
+        margin - width / 2
+    );
+    tctx.arc(
+        canvas.width / 2,
+        margin,
+        pocketSize + width / 2,
+        (1 + d) * Math.PI,
+        (2 - d) * Math.PI
+    );
+    tctx.lineTo(
+        canvas.width / 2 + pocketSize + overflow,
+        margin - width / 2
+    );
+    tctx.stroke();
+    tctx.closePath();
+
+    // mounting bottom middle
+    tctx.beginPath();
+    tctx.moveTo(
+        canvas.width / 2 - pocketSize - overflow,
+        canvas.height - (margin - width / 2)
+    );
+    tctx.arc(
+        canvas.width / 2,
+        canvas.height - margin,
+        pocketSize + width / 2,
+        (-1 - d) * Math.PI,
+        d * Math.PI,
+        true
+    );
+    tctx.lineTo(
+        canvas.width / 2 + pocketSize + overflow,
+        canvas.height - (margin - width / 2)
+    );
+    tctx.stroke();
+    tctx.closePath();
+
+    // mounting top right
     tctx.beginPath();
     tctx.moveTo(
         canvas.width - (margin - width / 2),
         margin + pocketSize + overflow
     );
-    tctx.lineTo(
-        canvas.width - (margin - width / 2),
-        margin + pocketSize
-    );
-    tctx.stroke();
-    tctx.moveTo(
-        canvas.width - (margin + pocketSize),
-        margin - width / 2
+    tctx.arc(
+        canvas.width - margin,
+        margin,
+        pocketSize + width / 2,
+        (2.5 - d) * Math.PI,
+        (1 + d) * Math.PI,
+        true
     );
     tctx.lineTo(
         canvas.width - (margin + pocketSize + overflow),
@@ -257,19 +229,18 @@ function drawMountings() {
     tctx.stroke();
     tctx.closePath();
 
-    // lines bottom right
+    // mounting bottom right
     tctx.beginPath();
     tctx.moveTo(
         canvas.width - (margin - width / 2),
         canvas.height - (margin + pocketSize + overflow)
     );
-    tctx.lineTo(
-        canvas.width - (margin - width / 2),
-        canvas.height - (margin + pocketSize)
-    );
-    tctx.moveTo(
-        canvas.width - (margin + pocketSize),
-        canvas.height - margin + width / 2
+    tctx.arc(
+        canvas.width - margin,
+        canvas.height - margin,
+        pocketSize + width / 2,
+        (-0.5 + d) * Math.PI,
+        (1 - d) * Math.PI
     );
     tctx.lineTo(
         canvas.width - (margin + pocketSize + overflow),
@@ -278,41 +249,5 @@ function drawMountings() {
     tctx.stroke();
     tctx.closePath();
 
-    // lines top middle
-    tctx.beginPath();
-    tctx.moveTo(
-        canvas.width / 2 - pocketSize - overflow,
-        margin - width / 2
-    );
-    tctx.lineTo(canvas.width / 2 - pocketSize, margin - width / 2);
-    tctx.stroke();
-    tctx.moveTo(canvas.width / 2 + pocketSize, margin - width / 2);
-    tctx.lineTo(
-        canvas.width / 2 + pocketSize + overflow,
-        margin - width / 2
-    );
-    tctx.stroke();
-    tctx.closePath();
-
-    // lines bottom middle
-    tctx.beginPath();
-    tctx.moveTo(
-        canvas.width / 2 - pocketSize - overflow,
-        canvas.height - (margin - width / 2)
-    );
-    tctx.lineTo(
-        canvas.width / 2 - pocketSize,
-        canvas.height - (margin - width / 2)
-    );
-    tctx.stroke();
-    tctx.moveTo(
-        canvas.width / 2 + pocketSize,
-        canvas.height - (margin - width / 2)
-    );
-    tctx.lineTo(
-        canvas.width / 2 + pocketSize + overflow,
-        canvas.height - (margin - width / 2)
-    );
-    tctx.stroke();
-    tctx.closePath();
+    tctx.restore();
 }
