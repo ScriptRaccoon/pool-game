@@ -1,8 +1,9 @@
 import { Ball } from "./Ball.js";
 import { clearCanvas } from "./canvas.js";
 import { Controller } from "./Controller.js";
+import { closeDialog } from "./dialog.js";
 import { setupBalls } from "./setupBalls.js";
-import { dialogElement, state } from "./state.js";
+import { state } from "./state.js";
 import { drawTable } from "./table.js";
 
 drawTable();
@@ -23,12 +24,13 @@ function loop() {
 
 loop();
 
-function init() {
-    restartBtn.addEventListener("click", () => {
-        Ball.resetAll();
-        dialogElement.open = false;
-        state.playing = true;
-    });
-}
+document
+    .getElementById("restartBtn")
+    .addEventListener("click", restartGame);
 
-init();
+function restartGame() {
+    Ball.resetAll();
+    closeDialog();
+    state.won = null;
+    state.playing = true;
+}

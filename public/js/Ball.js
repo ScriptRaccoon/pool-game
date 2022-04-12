@@ -1,8 +1,9 @@
 import { canvas, ctx, margin } from "./canvas.js";
+import { openDialog } from "./dialog.js";
 import { Pocket } from "./Pocket.js";
 import { Polygon } from "./Polygon.js";
 import { blackBall, whiteBall } from "./setupBalls.js";
-import { endMessage, state, writeStatus } from "./state.js";
+import { state } from "./state.js";
 import {
     angleBetween,
     sub,
@@ -27,7 +28,7 @@ export class Ball {
                         (ball) => ball == whiteBall || ball.inPocket
                     );
                 state.playing = false;
-                writeStatus(endMessage());
+                openDialog();
             } else if (whiteBall.inPocket) {
                 whiteBall.reset();
             }
