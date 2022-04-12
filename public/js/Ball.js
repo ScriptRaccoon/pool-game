@@ -16,7 +16,7 @@ export class Ball {
 
     static updateAll() {
         Ball.list.forEach((b) => b.update());
-        Ball.idle = Ball.list.every((b) => b.idle);
+        Ball.idle = Ball.list.every((b) => b.idle || b.inPocket);
         if (Ball.idle && whiteBall.inPocket) {
             whiteBall.reset();
         }
@@ -40,6 +40,7 @@ export class Ball {
         this.size = 18;
         this.friction = 0.99;
         this.debugSpeed = 1;
+        this.inPocket = false;
 
         this.gradient = ctx.createRadialGradient(
             -0.4 * this.size,
@@ -49,25 +50,10 @@ export class Ball {
             0,
             this.size
         );
-
         this.gradient.addColorStop(0, "rgba(255,255,255,0.25)");
         this.gradient.addColorStop(0.4, "rgba(255,255,255,0)");
         this.gradient.addColorStop(0.7, "rgba(0,0,0,0)");
         this.gradient.addColorStop(1, "rgba(0,0,0,0.3)");
-
-        this.shadowGradient = ctx.createRadialGradient(
-            0.4 * this.size,
-            0.4 * this.size,
-            1,
-            0,
-            0,
-            this.size * 1.5
-        );
-
-        this.shadowGradient.addColorStop(0, "red");
-        this.shadowGradient.addColorStop(1, "blue");
-
-        this.inPocket = false;
 
         Ball.list.push(this);
     }
