@@ -8,20 +8,38 @@ export class Polygon {
         Polygon.list.forEach((p) => p.draw());
     }
 
-    constructor(coords) {
+    constructor({ coords, shadow }) {
         this.coords = coords;
         this.color = "rgb(0,90,15)";
         Polygon.list.push(this);
+        this.shadow = shadow || { x: 0, y: 0 };
     }
 
     draw() {
-        tctx.lineWidth = 3;
+        tctx.filter = "blur(3px)";
         tctx.beginPath();
+        tctx.fillStyle = "rgba(0,0,0,0.45)";
+        tctx.moveTo(
+            this.coords[0].x + this.shadow.x,
+            this.coords[0].y + this.shadow.y
+        );
+        for (let i = 1; i < this.coords.length; i++) {
+            tctx.lineTo(
+                this.coords[i].x + this.shadow.x,
+                this.coords[i].y + this.shadow.y
+            );
+        }
+        tctx.fill();
+        tctx.closePath();
+        tctx.filter = "blur(0px)";
+
+        tctx.beginPath();
+        tctx.fillStyle = this.color;
         tctx.moveTo(this.coords[0].x, this.coords[0].y);
         for (let i = 1; i < this.coords.length; i++) {
             tctx.lineTo(this.coords[i].x, this.coords[i].y);
         }
-        tctx.fillStyle = this.color;
+
         tctx.fill();
         tctx.closePath();
     }
