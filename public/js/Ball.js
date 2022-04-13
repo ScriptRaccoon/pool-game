@@ -10,6 +10,7 @@ import {
     distance,
     norm,
     rotate,
+    randomElement,
 } from "./utils.js";
 
 export class Ball {
@@ -202,5 +203,21 @@ export class Ball {
         this.alpha = 1;
         this.pos = { ...this.originalPos };
         this.vel = { ...this.originalVel };
+        if (this == whiteBall) {
+            this.avoidOtherBalls();
+        }
+    }
+
+    avoidOtherBalls() {
+        const delta = 4;
+        while (
+            Ball.list.some(
+                (ball) => ball != this && this.intersects(ball)
+            )
+        ) {
+            const coord = randomElement(["x", "y"]);
+            const sign = randomElement([+1, -1]);
+            this.pos[coord] += sign * delta;
+        }
     }
 }

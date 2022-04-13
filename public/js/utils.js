@@ -40,3 +40,11 @@ export function solveRealQuadratic(a, b, c) {
     const root = Math.sqrt(discriminant);
     return [(-b + root) / (2 * a), (-b + root) / (2 * a)];
 }
+
+function randomInteger(a, b) {
+    return a + Math.floor((b - a) * Math.random());
+}
+
+export function randomElement(list) {
+    return list[randomInteger(0, list.length)];
+}
