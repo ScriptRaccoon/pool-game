@@ -128,21 +128,30 @@ function drawMountings() {
     tctx.strokeStyle = "rgb(230,180,0)";
     tctx.lineCap = "round";
     const overflow = 50;
-    const d = 0.05;
+    const d = 0.04;
+    const d2 = 0.16;
+    const grace = 10;
+    const cornerOffset = 12;
     tctx.shadowBlur = 10;
     tctx.shadowColor = "rgb(255,200,0,0.25)";
 
     // mounting top left
     tctx.beginPath();
-    tctx.moveTo(margin - width / 2, margin + pocketSize + overflow);
-    tctx.arc(
-        margin,
-        margin,
-        pocketSize + width / 2,
-        (0.5 + d) * Math.PI,
-        (2 - d) * Math.PI
+    tctx.moveTo(
+        margin - width / 2,
+        margin + pocketSize + overflow + grace
     );
-    tctx.lineTo(margin + pocketSize + overflow, margin - width / 2);
+    tctx.arc(
+        margin + cornerOffset,
+        margin + cornerOffset,
+        pocketSize + width / 2,
+        (0.5 + d2) * Math.PI,
+        (2 - d2) * Math.PI
+    );
+    tctx.lineTo(
+        margin + pocketSize + overflow + grace,
+        margin - width / 2
+    );
     tctx.stroke();
     tctx.closePath();
 
@@ -150,18 +159,18 @@ function drawMountings() {
     tctx.beginPath();
     tctx.moveTo(
         margin - width / 2,
-        canvas.height - (margin + pocketSize + overflow)
+        canvas.height - (margin + pocketSize + overflow + grace)
     );
     tctx.arc(
-        margin,
-        canvas.height - margin,
+        margin + cornerOffset,
+        canvas.height - margin - cornerOffset,
         pocketSize + width / 2,
-        (1.5 - d) * Math.PI,
-        d * Math.PI,
+        (1.5 - d2) * Math.PI,
+        d2 * Math.PI,
         true
     );
     tctx.lineTo(
-        margin + pocketSize + overflow,
+        margin + pocketSize + overflow + grace,
         canvas.height - margin + width / 2
     );
     tctx.stroke();
@@ -212,18 +221,18 @@ function drawMountings() {
     tctx.beginPath();
     tctx.moveTo(
         canvas.width - (margin - width / 2),
-        margin + pocketSize + overflow
+        margin + pocketSize + overflow + grace
     );
     tctx.arc(
-        canvas.width - margin,
-        margin,
+        canvas.width - margin - cornerOffset,
+        margin + cornerOffset,
         pocketSize + width / 2,
-        (2.5 - d) * Math.PI,
-        (1 + d) * Math.PI,
+        (2.5 - d2) * Math.PI,
+        (1 + d2) * Math.PI,
         true
     );
     tctx.lineTo(
-        canvas.width - (margin + pocketSize + overflow),
+        canvas.width - (margin + pocketSize + overflow + grace),
         margin - width / 2
     );
     tctx.stroke();
@@ -233,17 +242,17 @@ function drawMountings() {
     tctx.beginPath();
     tctx.moveTo(
         canvas.width - (margin - width / 2),
-        canvas.height - (margin + pocketSize + overflow)
+        canvas.height - (margin + pocketSize + overflow + grace)
     );
     tctx.arc(
-        canvas.width - margin,
-        canvas.height - margin,
+        canvas.width - margin - cornerOffset,
+        canvas.height - margin - cornerOffset,
         pocketSize + width / 2,
-        (-0.5 + d) * Math.PI,
-        (1 - d) * Math.PI
+        (-0.5 + d2) * Math.PI,
+        (1 - d2) * Math.PI
     );
     tctx.lineTo(
-        canvas.width - (margin + pocketSize + overflow),
+        canvas.width - (margin + pocketSize + overflow + grace),
         canvas.height - margin + width / 2
     );
     tctx.stroke();

@@ -1,12 +1,11 @@
 import { canvas, margin } from "./canvas.js";
 import { Polygon } from "./Polygon.js";
 
-const width = 20;
-const grace = 20;
-
 export const pocketSize = 30;
 
 export function setupPolygons() {
+    const width = 20;
+    const grace = 10;
     // top left
     new Polygon({
         coords: [
