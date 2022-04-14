@@ -17,7 +17,6 @@ function loop() {
     clearCanvas();
     Ball.updateAll();
     Ball.drawAll();
-    controller.update();
     controller.draw();
     requestAnimationFrame(loop);
 }

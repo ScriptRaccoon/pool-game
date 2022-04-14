@@ -1,4 +1,3 @@
-import { Ball } from "./Ball.js";
 import { ctx, canvas, canvasNorm } from "./canvas.js";
 import { mouse } from "./mouse.js";
 import { whiteBall } from "./setupBalls.js";
@@ -7,8 +6,11 @@ import { sub, scale, normalize } from "./utils.js";
 
 export class Controller {
     constructor() {
-        this.active = false;
         this.enableKlick();
+    }
+
+    get active() {
+        return state.idle && state.playing;
     }
 
     enableKlick() {
@@ -18,10 +20,6 @@ export class Controller {
             whiteBall.vel.x = factor * (mouse.x - whiteBall.pos.x);
             whiteBall.vel.y = factor * (mouse.y - whiteBall.pos.y);
         });
-    }
-
-    update() {
-        this.active = Ball.idle && state.playing;
     }
 
     draw() {

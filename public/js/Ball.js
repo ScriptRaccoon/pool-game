@@ -15,13 +15,12 @@ import {
 
 export class Ball {
     static list = [];
-    static idle = true;
 
     static updateAll() {
         if (!state.playing) return;
         Ball.list.forEach((b) => b.update());
-        Ball.idle = Ball.list.every((b) => b.idle || b.inPocket);
-        if (Ball.idle) {
+        state.idle = Ball.list.every((b) => b.idle || b.inPocket);
+        if (state.idle) {
             if (blackBall.inPocket) {
                 state.won =
                     !whiteBall.inPocket &&
