@@ -5,12 +5,16 @@ import { distance } from "./utils.js";
 export class Pocket {
     static list = [];
 
+    static cornerOffset = 12;
+
     static drawAll() {
         Pocket.list.forEach((pocket) => pocket.draw());
     }
 
-    constructor({ pos }) {
+    constructor({ pos, type, rotation }) {
         this.pos = pos;
+        this.type = type;
+        this.rotation = rotation;
         this.size = pocketSize;
         this.gradient = tctx.createRadialGradient(
             this.pos.x,
@@ -39,5 +43,58 @@ export class Pocket {
 
     includes(ball) {
         return distance(this.pos, ball.pos) < this.size;
+    }
+
+    drawMounting() {
+        tctx.save();
+        const width = 10;
+        tctx.lineWidth = width;
+        tctx.strokeStyle = "rgb(230,180,0)";
+        tctx.lineCap = "round";
+
+        tctx.shadowBlur = 10;
+        tctx.shadowColor = "rgb(255,200,0,0.25)";
+        tctx.translate(this.pos.x, this.pos.y);
+        tctx.rotate((this.rotation * Math.PI) / 180);
+
+        if (this.type === "corner") {
+            const d2 = 0.16;
+            const overflow = 60;
+            tctx.beginPath();
+            tctx.moveTo(
+                -width / 2 - Pocket.cornerOffset,
+                this.size + overflow - Pocket.cornerOffset
+            );
+            tctx.arc(
+                0,
+                0,
+                this.size + width / 2,
+                (0.5 + d2) * Math.PI,
+                (2 - d2) * Math.PI
+            );
+            tctx.lineTo(
+                this.size + overflow - Pocket.cornerOffset,
+                -width / 2 - Pocket.cornerOffset
+            );
+            tctx.stroke();
+            tctx.closePath();
+        } else if (this.type === "edge") {
+            const d = 0.04;
+            const overflow = 50;
+            tctx.beginPath();
+            tctx.moveTo(-this.size - overflow, -width / 2);
+            tctx.arc(
+                0,
+                0,
+                this.size + width / 2,
+                (1 + d) * Math.PI,
+                (2 - d) * Math.PI
+            );
+            tctx.lineTo(this.size + overflow, -width / 2);
+            tctx.stroke();
+            tctx.closePath();
+        }
+
+        tctx.restore();
     }
 }
