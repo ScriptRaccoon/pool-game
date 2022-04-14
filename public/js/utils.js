@@ -11,6 +11,12 @@ export function normalize(v) {
     return scale(1 / norm(v), v);
 }
 
+export function limit(v, s) {
+    const n = norm(v);
+    if (n <= s) return v;
+    return scale(s / n, v);
+}
+
 export function sub(v, w) {
     return { x: v.x - w.x, y: v.y - w.y };
 }
