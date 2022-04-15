@@ -137,6 +137,12 @@ export class Ball {
                 const angle = angleBetween(this.vel, vector);
                 const newVel = rotate(2 * angle, this.vel);
                 this.vel = newVel;
+                // play sound
+                SOUND.BUMPER.volume = Math.min(
+                    1,
+                    norm(this.vel) / 10
+                );
+                SOUND.BUMPER.play();
             }
         });
     }
