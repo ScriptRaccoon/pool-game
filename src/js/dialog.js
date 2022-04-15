@@ -1,12 +1,16 @@
 import { state } from "./state.js";
 
-export const dialogElement = document.querySelector("dialog");
+const dialogElement = document.getElementById("dialog");
 
 dialogElement.addEventListener("click", closeDialog);
 
 export function closeDialog() {
-    dialogElement.open = false;
-    dialogElement.innerText = "";
+    dialogElement.classList.add("close");
+    setTimeout(() => {
+        dialogElement.classList.remove("close");
+        dialogElement.open = false;
+        dialogElement.innerText = "";
+    }, 300);
 }
 
 export function openDialog() {
