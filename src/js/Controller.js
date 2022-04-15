@@ -1,8 +1,9 @@
 import { ctx, canvas, canvasNorm } from "./canvas.js";
 import { mouse } from "./mouse.js";
 import { whiteBall } from "./setupBalls.js";
+import { SOUND } from "./sound.js";
 import { state } from "./state.js";
-import { sub, scale, normalize, limit } from "./utils.js";
+import { sub, scale, normalize, limit, norm } from "./utils.js";
 
 export class Controller {
     constructor() {
@@ -10,7 +11,15 @@ export class Controller {
         this.vector = { x: 0, y: 0 };
         document.addEventListener("click", () => {
             if (!this.active) return;
+            const factor = 0.1;
             whiteBall.vel = scale(0.1, this.vector);
+            const speed = norm(whiteBall.vel);
+            const volume = Math.min(
+                1,
+                speed / (factor * this.maxLength)
+            );
+            SOUND.CUE.volume = volume;
+            SOUND.CUE.play();
         });
     }
 
