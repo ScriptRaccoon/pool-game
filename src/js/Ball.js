@@ -12,6 +12,7 @@ import {
     rotate,
     randomElement,
 } from "./utils.js";
+import { SOUND } from "./sound.js";
 
 export class Ball {
     static list = [];
@@ -168,12 +169,16 @@ export class Ball {
             if (ball == this || ball.inPocket) return;
             if (this.intersects(ball)) {
                 // this doesn't follow physics, but roughly works
-                const factor = 0.008 * norm(this.vel);
-                const factor2 = 0.004 * norm(this.vel);
+                const speed = norm(this.vel);
+                const factor = 0.008 * speed;
+                const factor2 = 0.004 * speed;
                 ball.vel.x += factor * (ball.pos.x - this.pos.x);
                 ball.vel.y += factor * (ball.pos.y - this.pos.y);
                 this.vel.x += factor2 * (this.pos.x - ball.pos.x);
                 this.vel.y += factor2 * (this.pos.y - ball.pos.y);
+                // play sound
+                SOUND.COLLISION.volume = Math.min(speed / 6, 1);
+                SOUND.COLLISION.play();
             }
         });
     }
