@@ -151,6 +151,7 @@ export class Ball {
         Pocket.list.forEach((pocket) => {
             if (pocket.includes(this)) {
                 this.inPocket = true;
+                SOUND.POCKET.play();
                 return;
             }
         });
