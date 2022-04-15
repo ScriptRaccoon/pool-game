@@ -98,7 +98,7 @@ button {
     font-size: inherit;
     color: white;
     font-size: 20px;
-    background-color: green;
+    background: linear-gradient(hsl(130, 100%, 14%),hsl(130, 100%, 20%));
     padding: 5px 12px; 
     border-radius: 10px;
     cursor: pointer;
