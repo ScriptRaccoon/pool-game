@@ -150,11 +150,11 @@ export class Ball {
     }
 
     handleTinyVelocity() {
-        const tiny = 0.04;
-        if (Math.abs(this.vel.x) < tiny) {
+        const threshold = 0.04;
+        if (Math.abs(this.vel.x) < threshold) {
             this.vel.x = 0;
         }
-        if (Math.abs(this.vel.y) < tiny) {
+        if (Math.abs(this.vel.y) < threshold) {
             this.vel.y = 0;
         }
     }

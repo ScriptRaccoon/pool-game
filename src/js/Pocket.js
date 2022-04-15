@@ -1,11 +1,11 @@
 import { tctx } from "./canvas.js";
-import { pocketSize } from "./setupPaddings.js";
 import { distance } from "./utils.js";
+
+export const pocketSize = 30;
+export const cornerOffset = 12;
 
 export class Pocket {
     static list = [];
-
-    static cornerOffset = 12;
 
     static drawAll() {
         Pocket.list.forEach((pocket) => pocket.draw());
@@ -58,23 +58,23 @@ export class Pocket {
         tctx.rotate((this.rotation * Math.PI) / 180);
 
         if (this.type === "corner") {
-            const d2 = 0.16;
+            const d = 0.16;
             const overflow = 60;
             tctx.beginPath();
             tctx.moveTo(
-                -width / 2 - Pocket.cornerOffset,
-                this.size + overflow - Pocket.cornerOffset
+                -width / 2 - cornerOffset,
+                this.size + overflow - cornerOffset
             );
             tctx.arc(
                 0,
                 0,
                 this.size + width / 2,
-                (0.5 + d2) * Math.PI,
-                (2 - d2) * Math.PI
+                (0.5 + d) * Math.PI,
+                (2 - d) * Math.PI
             );
             tctx.lineTo(
-                this.size + overflow - Pocket.cornerOffset,
-                -width / 2 - Pocket.cornerOffset
+                this.size + overflow - cornerOffset,
+                -width / 2 - cornerOffset
             );
             tctx.stroke();
             tctx.closePath();

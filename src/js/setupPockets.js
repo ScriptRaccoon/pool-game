@@ -1,11 +1,11 @@
 import { canvas, margin } from "./canvas.js";
-import { Pocket } from "./Pocket.js";
+import { Pocket, cornerOffset } from "./Pocket.js";
 
 export function setupPockets() {
     new Pocket({
         pos: {
-            x: margin + Pocket.cornerOffset,
-            y: margin + Pocket.cornerOffset,
+            x: margin + cornerOffset,
+            y: margin + cornerOffset,
         },
         type: "corner",
         rotation: 0,
@@ -17,16 +17,16 @@ export function setupPockets() {
     });
     new Pocket({
         pos: {
-            x: canvas.width - margin - Pocket.cornerOffset,
-            y: margin + Pocket.cornerOffset,
+            x: canvas.width - margin - cornerOffset,
+            y: margin + cornerOffset,
         },
         type: "corner",
         rotation: 90,
     });
     new Pocket({
         pos: {
-            x: canvas.width - margin - Pocket.cornerOffset,
-            y: canvas.height - margin - Pocket.cornerOffset,
+            x: canvas.width - margin - cornerOffset,
+            y: canvas.height - margin - cornerOffset,
         },
         type: "corner",
         rotation: 180,
@@ -38,8 +38,8 @@ export function setupPockets() {
     });
     new Pocket({
         pos: {
-            x: margin + Pocket.cornerOffset,
-            y: canvas.height - margin - Pocket.cornerOffset,
+            x: margin + cornerOffset,
+            y: canvas.height - margin - cornerOffset,
         },
         type: "corner",
         rotation: -90,

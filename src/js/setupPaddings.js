@@ -1,7 +1,6 @@
 import { canvas, margin } from "./canvas.js";
 import { Padding } from "./Padding.js";
-
-export const pocketSize = 30;
+import { pocketSize } from "./Pocket.js";
 
 export function setupPaddings() {
     const width = 20;
