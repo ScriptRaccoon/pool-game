@@ -169,10 +169,11 @@ export class Ball {
             if (this.intersects(ball)) {
                 // this doesn't follow physics, but roughly works
                 const factor = 0.008 * norm(this.vel);
+                const factor2 = 0.004 * norm(this.vel);
                 ball.vel.x += factor * (ball.pos.x - this.pos.x);
                 ball.vel.y += factor * (ball.pos.y - this.pos.y);
-                this.vel.x += factor * (this.pos.x - ball.pos.x);
-                this.vel.y += factor * (this.pos.y - ball.pos.y);
+                this.vel.x += factor2 * (this.pos.x - ball.pos.x);
+                this.vel.y += factor2 * (this.pos.y - ball.pos.y);
             }
         });
     }
