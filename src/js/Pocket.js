@@ -1,5 +1,5 @@
 import { tctx } from "./canvas.js";
-import { pocketSize } from "./setupPolygons.js";
+import { pocketSize } from "./setupPaddings.js";
 import { distance } from "./utils.js";
 
 export class Pocket {

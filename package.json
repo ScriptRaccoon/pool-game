@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "esbuild src/js/main.js --minify --bundle --outfile=dist/bundle.js",
-    "dev": "esbuild src/js/main.js --watch --bundle --outfile=dist/bundle.js"
+    "build": "esbuild src/js/main.js --minify --bundle --outfile=dist/build/bundle.js",
+    "dev": "esbuild src/js/main.js --watch --bundle --outfile=dist/build/bundle.js"
   },
   "keywords": [],
   "author": "Script Raccoon",

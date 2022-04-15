@@ -1,13 +1,13 @@
 import { canvas, margin } from "./canvas.js";
-import { Polygon } from "./Polygon.js";
+import { Padding } from "./Padding.js";
 
 export const pocketSize = 30;
 
-export function setupPolygons() {
+export function setupPaddings() {
     const width = 20;
     const grace = 10;
     // top left
-    new Polygon({
+    new Padding({
         coords: [
             { x: margin + pocketSize + grace, y: margin },
             {
@@ -24,7 +24,7 @@ export function setupPolygons() {
     });
 
     // bottom left
-    new Polygon({
+    new Padding({
         coords: [
             {
                 x: canvas.width / 2 - pocketSize,
@@ -48,7 +48,7 @@ export function setupPolygons() {
     });
 
     // top right
-    new Polygon({
+    new Padding({
         coords: [
             { x: canvas.width / 2 + pocketSize, y: margin },
             {
@@ -68,7 +68,7 @@ export function setupPolygons() {
     });
 
     // bottom right
-    new Polygon({
+    new Padding({
         coords: [
             {
                 x: canvas.width - pocketSize - margin - grace,
@@ -92,7 +92,7 @@ export function setupPolygons() {
     });
 
     // side left
-    new Polygon({
+    new Padding({
         coords: [
             {
                 x: margin,
@@ -117,7 +117,7 @@ export function setupPolygons() {
     });
 
     // side right
-    new Polygon({
+    new Padding({
         coords: [
             {
                 x: canvas.width - margin,
