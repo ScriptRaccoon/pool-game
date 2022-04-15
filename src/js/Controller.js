@@ -6,7 +6,8 @@ import { sub, scale, normalize, limit } from "./utils.js";
 
 export class Controller {
     constructor() {
-        this.maxLength = 200;
+        this.maxLength = 300;
+        this.vector = { x: 0, y: 0 };
         this.enableKlick();
     }
 
@@ -17,32 +18,30 @@ export class Controller {
     enableKlick() {
         canvas.addEventListener("click", () => {
             if (!this.active) return;
-            const factor = 0.1;
-            whiteBall.vel = {
-                x: factor * (mouse.x - whiteBall.pos.x),
-                y: factor * (mouse.y - whiteBall.pos.y),
-            };
+            whiteBall.vel = scale(0.1, this.vector);
         });
     }
 
     draw() {
         if (!this.active) return;
+        // thick line
         ctx.save();
-        ctx.lineCap = "round";
         ctx.lineWidth = 10;
+        ctx.lineCap = "round";
         ctx.strokeStyle = "rgba(255,255,255,0.5)";
-        const target = limit(
+        this.vector = limit(
             sub(mouse, whiteBall.pos),
             this.maxLength
         );
         ctx.translate(whiteBall.pos.x, whiteBall.pos.y);
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.lineTo(target.x, target.y);
+        ctx.lineTo(this.vector.x, this.vector.y);
         ctx.stroke();
         ctx.closePath();
-        const targetFar = scale(canvasNorm, normalize(target));
+        // thin line
         ctx.lineWidth = 1;
+        const targetFar = scale(canvasNorm, normalize(this.vector));
         ctx.beginPath();
         ctx.moveTo(0, 0);
         ctx.lineTo(targetFar.x, targetFar.y);
