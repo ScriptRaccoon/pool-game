@@ -8,18 +8,14 @@ export class Controller {
     constructor() {
         this.maxLength = 300;
         this.vector = { x: 0, y: 0 };
-        this.enableKlick();
+        document.addEventListener("click", () => {
+            if (!this.active) return;
+            whiteBall.vel = scale(0.1, this.vector);
+        });
     }
 
     get active() {
         return state.idle && state.playing;
-    }
-
-    enableKlick() {
-        canvas.addEventListener("click", () => {
-            if (!this.active) return;
-            whiteBall.vel = scale(0.1, this.vector);
-        });
     }
 
     draw() {
