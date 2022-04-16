@@ -10,7 +10,10 @@ import {
     distance,
     norm,
     rotate,
+    scale,
     randomElement,
+    dotProduct,
+    add,
 } from "./utils.js";
 import { SOUND } from "./sound.js";
 
@@ -129,7 +132,7 @@ export class Ball {
         this.vel.x *= this.friction;
         this.vel.y *= this.friction;
         if (this.inPocket) return;
-        this.pushBalls();
+        this.collideWithBalls();
         this.bounceOfWalls();
         this.bounceOffPaddings();
         this.handleTinyVelocity();
@@ -180,22 +183,29 @@ export class Ball {
         return distance(this.pos, ball.pos) <= this.size + ball.size;
     }
 
-    pushBalls() {
+    collideWithBalls() {
         Ball.list.forEach((ball) => {
             if (ball == this || ball.inPocket) return;
-            if (this.intersects(ball)) {
-                // this doesn't follow physics, but roughly works
-                const speed = norm(this.vel);
-                const factor = 0.008 * speed;
-                const factor2 = 0.004 * speed;
-                ball.vel.x += factor * (ball.pos.x - this.pos.x);
-                ball.vel.y += factor * (ball.pos.y - this.pos.y);
-                this.vel.x += factor2 * (this.pos.x - ball.pos.x);
-                this.vel.y += factor2 * (this.pos.y - ball.pos.y);
-                // play sound
-                SOUND.COLLISION.volume = Math.min(speed / 6, 1);
-                SOUND.COLLISION.play();
-            }
+            const d = distance(this.pos, ball.pos);
+            // check for collision
+            if (d > this.size + ball.size) return;
+            // pull balls apart when there is overlap
+            const L = this.size + ball.size - d;
+            const n = sub(ball.pos, this.pos);
+            const c = scale(L / (2 * d), n);
+            this.pos = sub(this.pos, c);
+            ball.pos = add(ball.pos, c);
+            // https://en.wikipedia.org/wiki/Elastic_collision
+            const prod = dotProduct(sub(this.vel, ball.vel), n);
+            const m = scale(prod / (d * d), n);
+            this.vel = sub(this.vel, m);
+            ball.vel = add(ball.vel, m);
+            // play sound
+            SOUND.COLLISION.volume = Math.min(
+                (norm(this.vel) + norm(ball.vel)) / 6,
+                1
+            );
+            SOUND.COLLISION.play();
         });
     }
 

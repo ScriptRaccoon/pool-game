@@ -21,6 +21,10 @@ export function sub(v, w) {
     return { x: v.x - w.x, y: v.y - w.y };
 }
 
+export function add(v, w) {
+    return { x: v.x + w.x, y: v.y + w.y };
+}
+
 export function scale(r, v) {
     return { x: r * v.x, y: r * v.y };
 }
@@ -32,7 +36,7 @@ export function rotate(alpha, v) {
     };
 }
 
-function dotProduct(v, w) {
+export function dotProduct(v, w) {
     return v.x * w.x + v.y * w.y;
 }
 
