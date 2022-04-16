@@ -1,12 +1,12 @@
 import { canvas, margin } from "./canvas.js";
-import { Padding } from "./Padding.js";
+import { Bumper } from "./Bumper.js";
 import { pocketSize } from "./Pocket.js";
 
-export function setupPaddings() {
+export function setupBumpers() {
     const width = 20;
     const grace = 10;
     // top left
-    new Padding({
+    new Bumper({
         coords: [
             { x: margin + pocketSize + grace, y: margin },
             {
@@ -23,7 +23,7 @@ export function setupPaddings() {
     });
 
     // bottom left
-    new Padding({
+    new Bumper({
         coords: [
             {
                 x: canvas.width / 2 - pocketSize,
@@ -47,7 +47,7 @@ export function setupPaddings() {
     });
 
     // top right
-    new Padding({
+    new Bumper({
         coords: [
             { x: canvas.width / 2 + pocketSize, y: margin },
             {
@@ -67,7 +67,7 @@ export function setupPaddings() {
     });
 
     // bottom right
-    new Padding({
+    new Bumper({
         coords: [
             {
                 x: canvas.width - pocketSize - margin - grace,
@@ -91,7 +91,7 @@ export function setupPaddings() {
     });
 
     // side left
-    new Padding({
+    new Bumper({
         coords: [
             {
                 x: margin,
@@ -116,7 +116,7 @@ export function setupPaddings() {
     });
 
     // side right
-    new Padding({
+    new Bumper({
         coords: [
             {
                 x: canvas.width - margin,

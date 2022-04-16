@@ -1,7 +1,7 @@
 import { canvas, ctx, margin } from "./canvas.js";
 import { openDialog } from "./dialog.js";
 import { Pocket } from "./Pocket.js";
-import { Padding } from "./Padding.js";
+import { Bumper } from "./Bumper.js";
 import { blackBall, whiteBall } from "./setupBalls.js";
 import { state } from "./state.js";
 import {
@@ -134,17 +134,18 @@ export class Ball {
         if (this.inPocket) return;
         this.collideWithBalls();
         this.bounceOfWalls();
-        this.bounceOffPaddings();
+        this.bounceOffBumpers();
         this.handleTinyVelocity();
         this.checkPockets();
     }
 
-    bounceOffPaddings() {
-        Padding.list.forEach((padding) => {
-            const i = padding.intersectionLineWith(this);
+    bounceOffBumpers() {
+        Bumper.list.forEach((bumper) => {
+            const i = bumper.intersectionLineWith(this);
             if (i !== null) {
-                const start = padding.coords[i];
-                const end = padding.coords[i + 1];
+                // bouncing
+                const start = bumper.coords[i];
+                const end = bumper.coords[i + 1];
                 const vector = sub(end, start);
                 const angle = angleBetween(this.vel, vector);
                 const newVel = rotate(2 * angle, this.vel);

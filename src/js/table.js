@@ -1,16 +1,16 @@
 import { canvas, tctx, margin } from "./canvas.js";
 import { Pocket } from "./Pocket.js";
-import { Padding } from "./Padding.js";
+import { Bumper } from "./Bumper.js";
 import { setupPockets } from "./setupPockets.js";
-import { setupPaddings } from "./setupPaddings.js";
+import { setupBumpers } from "./setupBumpers.js";
 
 export function drawTable() {
     drawCloth();
     drawWood();
     setupPockets();
     Pocket.drawAll();
-    setupPaddings();
-    Padding.drawAll();
+    setupBumpers();
+    Bumper.drawAll();
     Pocket.list.forEach((p) => p.drawMounting());
 }
 
