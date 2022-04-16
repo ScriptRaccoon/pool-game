@@ -23,17 +23,26 @@ export class Ball {
         state.idle = Ball.list.every((b) => b.idle || b.inPocket);
         if (state.idle) {
             if (blackBall.inPocket) {
-                state.won =
-                    !whiteBall.inPocket &&
-                    Ball.list.every(
-                        (ball) => ball == whiteBall || ball.inPocket
-                    );
-                state.playing = false;
-                openDialog();
+                Ball.finishGame();
             } else if (whiteBall.inPocket) {
                 whiteBall.reset();
             }
         }
+    }
+
+    static finishGame() {
+        state.won =
+            !whiteBall.inPocket &&
+            Ball.list.every(
+                (ball) => ball == whiteBall || ball.inPocket
+            );
+        state.playing = false;
+        if (state.won) {
+            SOUND.WIN.play();
+        } else {
+            SOUND.LOSE.play();
+        }
+        openDialog();
     }
 
     static drawAll() {

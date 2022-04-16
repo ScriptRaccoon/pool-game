@@ -9,8 +9,9 @@ export class Controller {
     constructor() {
         this.maxLength = 300;
         this.vector = { x: 0, y: 0 };
-        document.addEventListener("click", () => {
-            if (!this.active) return;
+        document.addEventListener("click", (e) => {
+            if (!this.active || e.target.nodeName === "BUTTON")
+                return;
             const factor = 0.1;
             whiteBall.vel = scale(0.1, this.vector);
             const speed = norm(whiteBall.vel);
