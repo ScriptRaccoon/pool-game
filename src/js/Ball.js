@@ -141,12 +141,11 @@ export class Ball {
 
     bounceOffBumpers() {
         Bumper.list.forEach((bumper) => {
-            const i = bumper.intersectionSegmentWith(this);
-            if (i !== null) {
+            const segment = bumper.intersectionSegment(this);
+            if (segment !== null) {
                 // bouncing
-                const start = bumper.coords[i];
-                const end = bumper.coords[i + 1];
-                const vector = sub(end, start);
+                const [a, b] = segment;
+                const vector = sub(b, a);
                 const angle = angleBetween(this.vel, vector);
                 this.vel = rotate(2 * angle, this.vel);
                 // play sound

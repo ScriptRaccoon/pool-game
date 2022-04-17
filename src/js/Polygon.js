@@ -1,5 +1,5 @@
 import { tctx } from "./canvas.js";
-import { intersectionSegmentCircle } from "./math.js";
+import { segmentIntersectsCircle } from "./math.js";
 
 export class Polygon {
     constructor({ coords }) {
@@ -16,14 +16,14 @@ export class Polygon {
         tctx.closePath();
     }
 
-    intersectionSegmentWith(circle) {
+    intersectionSegment(circle) {
         for (let i = 0; i < this.coords.length - 1; i++) {
             const a = this.coords[i];
             const b = this.coords[i + 1];
             const c = circle.pos;
             const r = circle.size;
-            if (intersectionSegmentCircle([a, b], [c, r])) {
-                return i;
+            if (segmentIntersectsCircle([a, b], [c, r])) {
+                return [a, b];
             }
         }
         return null;

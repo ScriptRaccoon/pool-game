@@ -59,8 +59,8 @@ function solveRealQuadratic(a, b, c) {
     return [(-b + root) / (2 * a), (-b - root) / (2 * a)];
 }
 
-export function intersectionSegmentCircle(line, circle) {
-    const [a, b] = line;
+export function segmentIntersectsCircle(segment, circle) {
+    const [a, b] = segment;
     const [c, r] = circle;
     // a point of intersection has the form a + t*b with 0 <= t <= 1
     // and (a.x + t * b.x - c.x)^2 + (a.y + t * b.y - c.y)^2 = r^2.
