@@ -7,3 +7,5 @@ export const SOUND = {
     WIN: new Audio("./sfx/win.mp3"),
     LOSE: new Audio("./sfx/lose.mp3"),
 };
+
+SOUND.WHIP.volume = 0.3;

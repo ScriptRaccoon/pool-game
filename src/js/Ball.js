@@ -28,6 +28,7 @@ export class Ball {
             if (blackBall.inPocket) {
                 Ball.finishGame();
             } else if (whiteBall.inPocket) {
+                SOUND.WHIP.play();
                 whiteBall.reset();
             }
         }
@@ -201,7 +202,7 @@ export class Ball {
             ball.vel = add(ball.vel, m);
             // play sound
             SOUND.COLLISION.volume = Math.min(
-                (norm(this.vel) + norm(ball.vel)) / 6,
+                (norm(this.vel) + norm(ball.vel)) / 15,
                 1
             );
             SOUND.COLLISION.play();
