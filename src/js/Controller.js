@@ -3,12 +3,20 @@ import { mouse } from "./mouse.js";
 import { whiteBall } from "./setupBalls.js";
 import { SOUND } from "./sound.js";
 import { state } from "./state.js";
-import { sub, scale, normalize, limit, norm } from "./utils.js";
+import { sub, scale, normalize, limit, norm } from "./math.js";
 
 export class Controller {
     constructor() {
         this.maxLength = 300;
         this.vector = { x: 0, y: 0 };
+        this.addControl();
+    }
+
+    get active() {
+        return state.idle && state.playing;
+    }
+
+    addControl() {
         document.addEventListener("click", (e) => {
             if (!this.active || e.target.nodeName === "BUTTON")
                 return;
@@ -22,10 +30,6 @@ export class Controller {
             SOUND.CUE.volume = volume;
             SOUND.CUE.play();
         });
-    }
-
-    get active() {
-        return state.idle && state.playing;
     }
 
     draw() {
