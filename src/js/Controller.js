@@ -12,8 +12,8 @@ export class Controller {
         document.addEventListener("click", (e) => {
             if (!this.active || e.target.nodeName === "BUTTON")
                 return;
-            const factor = 0.1;
-            whiteBall.vel = scale(0.1, this.vector);
+            const factor = 0.15;
+            whiteBall.vel = scale(factor, this.vector);
             const speed = norm(whiteBall.vel);
             const volume = Math.min(
                 1,
