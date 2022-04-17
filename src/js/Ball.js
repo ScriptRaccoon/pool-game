@@ -14,7 +14,7 @@ import {
     randomElement,
     dotProduct,
     add,
-} from "./utils.js";
+} from "./math.js";
 import { SOUND } from "./sound.js";
 
 export class Ball {
@@ -141,15 +141,14 @@ export class Ball {
 
     bounceOffBumpers() {
         Bumper.list.forEach((bumper) => {
-            const i = bumper.intersectionLineWith(this);
+            const i = bumper.intersectionSegmentWith(this);
             if (i !== null) {
                 // bouncing
                 const start = bumper.coords[i];
                 const end = bumper.coords[i + 1];
                 const vector = sub(end, start);
                 const angle = angleBetween(this.vel, vector);
-                const newVel = rotate(2 * angle, this.vel);
-                this.vel = newVel;
+                this.vel = rotate(2 * angle, this.vel);
                 // play sound
                 SOUND.BUMPER.volume = Math.min(
                     1,

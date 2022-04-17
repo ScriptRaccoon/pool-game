@@ -5,6 +5,7 @@ import { pocketSize } from "./Pocket.js";
 export function setupBumpers() {
     const width = 20;
     const grace = 10;
+
     // top left
     new Bumper({
         coords: [

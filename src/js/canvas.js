@@ -1,4 +1,4 @@
-import { norm } from "./utils.js";
+import { norm } from "./math.js";
 
 /** @type {HTMLCanvasElement} */
 export const canvas = document.getElementById("canvas");
