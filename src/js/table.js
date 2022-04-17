@@ -1,19 +1,11 @@
 import { canvas, tctx, margin } from "./canvas.js";
 
-export function drawTable(game) {
-    drawCloth();
-    drawWood();
-    game.pockets.forEach((pocket) => pocket.draw());
-    game.bumpers.forEach((bumper) => bumper.draw());
-    game.pockets.forEach((pocket) => pocket.drawMounting());
-}
-
-function drawCloth() {
+export function drawCloth() {
     tctx.fillStyle = "rgb(26, 130, 30)";
     tctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function drawWood() {
+export function drawWood() {
     let gradient;
     function setupGradient() {
         gradient.addColorStop(0, "hsl(16, 76%, 15%)");

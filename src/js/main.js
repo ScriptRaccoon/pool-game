@@ -1,8 +1,7 @@
 import { clearCanvas } from "./canvas.js";
-import { drawTable } from "./table.js";
 import { game } from "./setupGame.js";
 
-drawTable(game);
+game.drawTable();
 
 function loop() {
     clearCanvas();

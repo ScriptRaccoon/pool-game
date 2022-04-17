@@ -87,9 +87,9 @@ export class Ball {
         this.vel.y *= this.friction;
         if (this.inPocket) return;
         this.bounceOfWalls();
-        this.collideWithBalls(game);
-        this.bounceOffBumpers(game);
-        this.checkPockets(game);
+        this.collideWithBalls(game.balls);
+        this.bounceOffBumpers(game.bumpers);
+        this.checkPockets(game.pockets);
         this.handleTinyVelocity();
     }
 
@@ -112,8 +112,8 @@ export class Ball {
         }
     }
 
-    collideWithBalls(game) {
-        game.balls.forEach((ball) => {
+    collideWithBalls(balls) {
+        balls.forEach((ball) => {
             if (ball == this || ball.inPocket) return;
             const d = distance(this.pos, ball.pos);
             // check for collision
@@ -138,8 +138,8 @@ export class Ball {
         });
     }
 
-    bounceOffBumpers(game) {
-        game.bumpers.forEach((bumper) => {
+    bounceOffBumpers(bumpers) {
+        bumpers.forEach((bumper) => {
             const segment = bumper.intersectionSegment(this);
             if (segment !== null) {
                 // bouncing
@@ -157,8 +157,8 @@ export class Ball {
         });
     }
 
-    checkPockets(game) {
-        game.pockets.forEach((pocket) => {
+    checkPockets(pockets) {
+        pockets.forEach((pocket) => {
             if (pocket.includes(this)) {
                 this.inPocket = true;
                 SOUND.POCKET.play();
@@ -187,14 +187,14 @@ export class Ball {
         this.pos = { ...this.originalPos };
         this.vel = { ...this.originalVel };
         if (this == game.whiteBall) {
-            this.avoidOtherBalls(game);
+            this.avoidOtherBalls(game.balls);
         }
     }
 
-    avoidOtherBalls(game) {
+    avoidOtherBalls(balls) {
         const delta = 4;
         while (
-            game.balls.some(
+            balls.some(
                 (ball) => ball != this && this.intersects(ball)
             )
         ) {
