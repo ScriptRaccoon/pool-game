@@ -2,6 +2,8 @@
 
 This is a pool game written in Vanilla JavaScript. All drawing operations are done on an HTML canvas. No images are used.
 
+https://pool-game.netlify.app
+
 <img src="./screenshots/screenshot1.png" />
 
 Use the mouse to determine the orientation and energy of the next shot.
