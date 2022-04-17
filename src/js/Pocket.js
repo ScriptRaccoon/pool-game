@@ -5,12 +5,6 @@ export const pocketSize = 30;
 export const cornerOffset = 12;
 
 export class Pocket {
-    static list = [];
-
-    static drawAll() {
-        Pocket.list.forEach((pocket) => pocket.draw());
-    }
-
     constructor({ pos, type, rotation }) {
         this.pos = pos;
         this.type = type;
@@ -26,7 +20,6 @@ export class Pocket {
         );
         this.gradient.addColorStop(0.5, "#151515");
         this.gradient.addColorStop(1, "#000");
-        Pocket.list.push(this);
     }
 
     draw() {

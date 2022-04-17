@@ -1,37 +1,14 @@
-import { Ball } from "./Ball.js";
 import { clearCanvas } from "./canvas.js";
-import { Controller } from "./Controller.js";
-import { closeDialog } from "./dialog.js";
-import { setupBalls } from "./setupBalls.js";
-import { SOUND } from "./sound.js";
-import { state } from "./state.js";
 import { drawTable } from "./table.js";
+import { game } from "./setupGame.js";
 
-drawTable();
-
-const controller = new Controller();
-
-setupBalls();
-Ball.drawAll();
+drawTable(game);
 
 function loop() {
     clearCanvas();
-    Ball.updateAll();
-    Ball.drawAll();
-    controller.draw();
+    game.update();
+    game.draw();
     requestAnimationFrame(loop);
 }
 
 loop();
-
-document
-    .getElementById("restartBtn")
-    .addEventListener("click", restartGame);
-
-function restartGame() {
-    SOUND.WHIP.play();
-    Ball.resetAll();
-    closeDialog();
-    state.won = null;
-    state.playing = true;
-}

@@ -1,9 +1,4 @@
 import { canvas, ctx, margin } from "./canvas.js";
-import { openDialog } from "./dialog.js";
-import { Pocket } from "./Pocket.js";
-import { Bumper } from "./Bumper.js";
-import { blackBall, whiteBall } from "./setupBalls.js";
-import { state } from "./state.js";
 import {
     angleBetween,
     sub,
@@ -18,45 +13,6 @@ import {
 import { SOUND } from "./sound.js";
 
 export class Ball {
-    static list = [];
-
-    static updateAll() {
-        if (!state.playing) return;
-        Ball.list.forEach((b) => b.update());
-        state.idle = Ball.list.every((b) => b.idle || b.inPocket);
-        if (state.idle) {
-            if (blackBall.inPocket) {
-                Ball.finishGame();
-            } else if (whiteBall.inPocket) {
-                SOUND.WHIP.play();
-                whiteBall.reset();
-            }
-        }
-    }
-
-    static finishGame() {
-        state.won =
-            !whiteBall.inPocket &&
-            Ball.list.every(
-                (ball) => ball == whiteBall || ball.inPocket
-            );
-        state.playing = false;
-        if (state.won) {
-            SOUND.WIN.play();
-        } else {
-            SOUND.LOSE.play();
-        }
-        openDialog();
-    }
-
-    static drawAll() {
-        Ball.list.forEach((b) => b.draw());
-    }
-
-    static resetAll() {
-        Ball.list.forEach((b) => b.reset());
-    }
-
     constructor({ pos, color, vel }) {
         this.pos = pos;
         this.originalPos = { ...pos };
@@ -66,7 +22,6 @@ export class Ball {
         this.size = 18;
         this.friction = 0.99;
         this.inPocket = false;
-
         this.gradient = ctx.createRadialGradient(
             -0.4 * this.size,
             -0.4 * this.size,
@@ -79,10 +34,7 @@ export class Ball {
         this.gradient.addColorStop(0.4, "rgba(255,255,255,0)");
         this.gradient.addColorStop(0.7, "rgba(0,0,0,0)");
         this.gradient.addColorStop(1, "rgba(0,0,0,0.3)");
-
         this.alpha = 1;
-
-        Ball.list.push(this);
     }
 
     draw() {
@@ -91,6 +43,7 @@ export class Ball {
         if (this.inPocket) {
             this.alpha = Math.max(0, this.alpha - 0.2);
         }
+        // prepare drawing
         const shadowFactor = {
             x: ((this.pos.x - canvas.width / 2) / canvas.width) * 0.5,
             y: 0.15,
@@ -126,65 +79,41 @@ export class Ball {
         return this.vel.x == 0 && this.vel.y == 0;
     }
 
-    update() {
+    update(game) {
         if (this.idle) return;
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
         this.vel.x *= this.friction;
         this.vel.y *= this.friction;
         if (this.inPocket) return;
-        this.collideWithBalls();
         this.bounceOfWalls();
-        this.bounceOffBumpers();
+        this.collideWithBalls(game);
+        this.bounceOffBumpers(game);
+        this.checkPockets(game);
         this.handleTinyVelocity();
-        this.checkPockets();
     }
 
-    bounceOffBumpers() {
-        Bumper.list.forEach((bumper) => {
-            const segment = bumper.intersectionSegment(this);
-            if (segment !== null) {
-                // bouncing
-                const [a, b] = segment;
-                const vector = sub(b, a);
-                const angle = angleBetween(this.vel, vector);
-                this.vel = rotate(2 * angle, this.vel);
-                // play sound
-                SOUND.BUMPER.volume = Math.min(
-                    1,
-                    norm(this.vel) / 10
-                );
-                SOUND.BUMPER.play();
-            }
-        });
-    }
-
-    checkPockets() {
-        Pocket.list.forEach((pocket) => {
-            if (pocket.includes(this)) {
-                this.inPocket = true;
-                SOUND.POCKET.play();
-                return;
-            }
-        });
-    }
-
-    handleTinyVelocity() {
-        const threshold = 0.04;
-        if (Math.abs(this.vel.x) < threshold) {
-            this.vel.x = 0;
+    bounceOfWalls() {
+        // horizontal
+        if (this.pos.x + this.size >= canvas.width - margin) {
+            this.pos.x = canvas.width - this.size - margin;
+            this.vel.x *= -1;
+        } else if (this.pos.x - this.size <= margin) {
+            this.pos.x = this.size + margin;
+            this.vel.x *= -1;
         }
-        if (Math.abs(this.vel.y) < threshold) {
-            this.vel.y = 0;
+        // vertical
+        if (this.pos.y + this.size >= canvas.height - margin) {
+            this.pos.y = canvas.height - this.size - margin;
+            this.vel.y *= -1;
+        } else if (this.pos.y - this.size <= margin) {
+            this.pos.y = this.size + margin;
+            this.vel.y *= -1;
         }
     }
 
-    intersects(ball) {
-        return distance(this.pos, ball.pos) <= this.size + ball.size;
-    }
-
-    collideWithBalls() {
-        Ball.list.forEach((ball) => {
+    collideWithBalls(game) {
+        game.balls.forEach((ball) => {
             if (ball == this || ball.inPocket) return;
             const d = distance(this.pos, ball.pos);
             // check for collision
@@ -209,40 +138,63 @@ export class Ball {
         });
     }
 
-    bounceOfWalls() {
-        const bounceFriction = 0.8;
-        // horizontal
-        if (this.pos.x + this.size >= canvas.width - margin) {
-            this.pos.x = canvas.width - this.size - margin;
-            this.vel.x *= -bounceFriction;
-        } else if (this.pos.x - this.size <= margin) {
-            this.pos.x = this.size + margin;
-            this.vel.x *= -bounceFriction;
+    bounceOffBumpers(game) {
+        game.bumpers.forEach((bumper) => {
+            const segment = bumper.intersectionSegment(this);
+            if (segment !== null) {
+                // bouncing
+                const [a, b] = segment;
+                const vector = sub(b, a);
+                const angle = angleBetween(this.vel, vector);
+                this.vel = rotate(2 * angle, this.vel);
+                // play sound
+                SOUND.BUMPER.volume = Math.min(
+                    1,
+                    norm(this.vel) / 10
+                );
+                SOUND.BUMPER.play();
+            }
+        });
+    }
+
+    checkPockets(game) {
+        game.pockets.forEach((pocket) => {
+            if (pocket.includes(this)) {
+                this.inPocket = true;
+                SOUND.POCKET.play();
+                return;
+            }
+        });
+    }
+
+    handleTinyVelocity() {
+        const threshold = 0.04;
+        if (Math.abs(this.vel.x) < threshold) {
+            this.vel.x = 0;
         }
-        // vertical
-        if (this.pos.y + this.size >= canvas.height - margin) {
-            this.pos.y = canvas.height - this.size - margin;
-            this.vel.y *= -bounceFriction;
-        } else if (this.pos.y - this.size <= margin) {
-            this.pos.y = this.size + margin;
-            this.vel.y *= -bounceFriction;
+        if (Math.abs(this.vel.y) < threshold) {
+            this.vel.y = 0;
         }
     }
 
-    reset() {
+    intersects(ball) {
+        return distance(this.pos, ball.pos) <= this.size + ball.size;
+    }
+
+    reset(game) {
         this.inPocket = false;
         this.alpha = 1;
         this.pos = { ...this.originalPos };
         this.vel = { ...this.originalVel };
-        if (this == whiteBall) {
-            this.avoidOtherBalls();
+        if (this == game.whiteBall) {
+            this.avoidOtherBalls(game);
         }
     }
 
-    avoidOtherBalls() {
+    avoidOtherBalls(game) {
         const delta = 4;
         while (
-            Ball.list.some(
+            game.balls.some(
                 (ball) => ball != this && this.intersects(ball)
             )
         ) {

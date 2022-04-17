@@ -2,18 +2,11 @@ import { tctx } from "./canvas.js";
 import { Polygon } from "./Polygon.js";
 
 export class Bumper extends Polygon {
-    static list = [];
-
-    static drawAll() {
-        Bumper.list.forEach((p) => p.draw());
-    }
-
     constructor({ coords, shadow }) {
         super({ coords });
         this.shadow = shadow || { x: 0, y: 0 };
         this.color = "rgb(0,90,15)";
         this.shadowColor = "rgba(0,0,0,0.45)";
-        Bumper.list.push(this);
     }
 
     draw() {

@@ -1,17 +1,11 @@
 import { canvas, tctx, margin } from "./canvas.js";
-import { Pocket } from "./Pocket.js";
-import { Bumper } from "./Bumper.js";
-import { setupPockets } from "./setupPockets.js";
-import { setupBumpers } from "./setupBumpers.js";
 
-export function drawTable() {
+export function drawTable(game) {
     drawCloth();
     drawWood();
-    setupPockets();
-    Pocket.drawAll();
-    setupBumpers();
-    Bumper.drawAll();
-    Pocket.list.forEach((p) => p.drawMounting());
+    game.pockets.forEach((pocket) => pocket.draw());
+    game.bumpers.forEach((bumper) => bumper.draw());
+    game.pockets.forEach((pocket) => pocket.drawMounting());
 }
 
 function drawCloth() {

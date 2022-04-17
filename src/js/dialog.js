@@ -1,5 +1,3 @@
-import { state } from "./state.js";
-
 const dialogElement = document.getElementById("dialog");
 
 dialogElement.addEventListener("click", closeDialog);
@@ -13,7 +11,7 @@ export function closeDialog() {
     }, 300);
 }
 
-export function openDialog() {
-    dialogElement.innerText = state.won ? "You won!" : "You lost!";
+export function openDialog(txt) {
+    dialogElement.innerText = txt;
     dialogElement.open = true;
 }
