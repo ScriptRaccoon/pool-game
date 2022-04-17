@@ -16,6 +16,7 @@ export class Polygon {
         tctx.closePath();
     }
 
+    // gets the segment which intersects a circle
     intersectionSegment(circle) {
         for (let i = 0; i < this.coords.length - 1; i++) {
             const a = this.coords[i];

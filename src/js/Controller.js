@@ -12,10 +12,6 @@ export class Controller {
         this.active = true;
     }
 
-    // get active() {
-    //     return this.game.idle && this.game.playing;
-    // }
-
     addControl() {
         document.addEventListener("click", (e) => {
             if (!this.active || e.target.nodeName === "BUTTON")

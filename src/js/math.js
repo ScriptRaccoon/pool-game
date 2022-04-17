@@ -1,34 +1,42 @@
+// distance between two points
 export function distance(p, q) {
     return Math.sqrt(Math.pow(p.x - q.x, 2) + Math.pow(p.y - q.y, 2));
 }
 
+// norm of a vector
 export function norm(v) {
     return Math.sqrt(Math.pow(v.x, 2) + Math.pow(v.y, 2));
 }
 
+// subtraction of two vectors
 export function sub(v, w) {
     return { x: v.x - w.x, y: v.y - w.y };
 }
 
+// addition of two vectors
 export function add(v, w) {
     return { x: v.x + w.x, y: v.y + w.y };
 }
 
+// scalar multiple of a vector
 export function scale(r, v) {
     return { x: r * v.x, y: r * v.y };
 }
 
+// normalization of a vector
 export function normalize(v) {
     if (v.x == 0 && v.y == 0) return v;
     return scale(1 / norm(v), v);
 }
 
+// limit the norm of a vector
 export function limit(v, s) {
     const n = norm(v);
     if (n <= s) return v;
     return scale(s / n, v);
 }
 
+// rotate a vector anticlockwise with an angle
 export function rotate(alpha, v) {
     return {
         x: v.x * Math.cos(alpha) - v.y * Math.sin(alpha),
@@ -36,22 +44,27 @@ export function rotate(alpha, v) {
     };
 }
 
+// dot product of two vectors
 export function dotProduct(v, w) {
     return v.x * w.x + v.y * w.y;
 }
 
+// angle between two vectors in [0,Pi]
 export function angleBetween(v, w) {
     return Math.acos(dotProduct(v, w) / (norm(v) * norm(w)));
 }
 
+// random integer between a and b
 function randomInteger(a, b) {
     return a + Math.floor((b - a) * Math.random());
 }
 
+// random element of a list
 export function randomElement(list) {
     return list[randomInteger(0, list.length)];
 }
 
+// list of real solutions of a*x^2 + b*x + c = 0
 function solveRealQuadratic(a, b, c) {
     const discriminant = b * b - 4 * a * c;
     if (discriminant < 0) return [];
@@ -59,12 +72,13 @@ function solveRealQuadratic(a, b, c) {
     return [(-b + root) / (2 * a), (-b - root) / (2 * a)];
 }
 
+// tests if a segment intersects a circle
 export function segmentIntersectsCircle(segment, circle) {
     const [a, b] = segment;
     const [c, r] = circle;
     // a point of intersection has the form a + t*b with 0 <= t <= 1
     // and (a.x + t * b.x - c.x)^2 + (a.y + t * b.y - c.y)^2 = r^2.
-    // this is a quadratic equation in t.
+    // this is simply a quadratic equation in t.
     const u = Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2);
     const v =
         2 * ((a.x - c.x) * (b.x - a.x) + (a.y - c.y) * (b.y - a.y));

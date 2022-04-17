@@ -18,7 +18,7 @@ export class Pocket {
             this.pos.y,
             this.size
         );
-        this.gradient.addColorStop(0.5, "#151515");
+        this.gradient.addColorStop(0.4, "#202020");
         this.gradient.addColorStop(1, "#000");
     }
 

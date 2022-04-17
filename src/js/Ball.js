@@ -22,6 +22,7 @@ export class Ball {
         this.size = 18;
         this.friction = 0.99;
         this.inPocket = false;
+        // gradient for light effects
         this.gradient = ctx.createRadialGradient(
             -0.4 * this.size,
             -0.4 * this.size,

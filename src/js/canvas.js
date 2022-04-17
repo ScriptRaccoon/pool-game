@@ -1,19 +1,22 @@
 import { norm } from "./math.js";
 
+// canvas for drawing the balls
 /** @type {HTMLCanvasElement} */
 export const canvas = document.getElementById("canvas");
+
+// canvas for drawing the table
 /** @type {HTMLCanvasElement} */
 const tableCanvas = document.getElementById("tableCanvas");
 
 export const ctx = canvas.getContext("2d");
 export const tctx = tableCanvas.getContext("2d");
 
+// wood margin
 export const margin = 60;
 
-canvas.width = 1200 + 2 * margin;
-canvas.height = 600 + 2 * margin;
-tableCanvas.width = 1200 + 2 * margin;
-tableCanvas.height = 600 + 2 * margin;
+// set up dimensions
+canvas.width = tableCanvas.width = 1200 + 2 * margin;
+canvas.height = tableCanvas.height = 600 + 2 * margin;
 
 export const canvasNorm = norm({ x: canvas.width, y: canvas.height });
 
