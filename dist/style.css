@@ -107,3 +107,16 @@ button {
 button:hover, button:focus-visible {
     filter: brightness(1.2)
 }
+
+/* #info for mobile devices */
+
+#info {
+    display: none;
+}
+
+@media (pointer: none), (pointer: coarse) {
+    #info {
+        display: block;
+        font-size: 30px;
+    }   
+}
