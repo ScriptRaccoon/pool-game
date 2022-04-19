@@ -151,7 +151,7 @@ export class Ball {
                 // play sound
                 SOUND.BUMPER.volume = Math.min(
                     1,
-                    norm(this.vel) / 10
+                    norm(this.vel) / 30
                 );
                 SOUND.BUMPER.play();
             }
