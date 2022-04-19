@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Pool Billiard</title>
+    <title>Pool Game</title>
     <link rel="stylesheet" href="./style.css">
     <!-- favicons -->
     <link rel="apple-touch-icon" sizes="76x76" href="./apple-touch-icon.png">
@@ -15,13 +15,6 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-    <dialog open id="info">
-            <form method="dialog">
-                <p>You need a mouse to play the game properly.</p>
-                <br>
-                <button type="submit">Ok</button>
-            </form>
-    </dialog>
     <menu>
         <button id="restartBtn">Restart</button>
     </menu>
@@ -29,7 +22,10 @@
         <canvas id="tableCanvas"></canvas>
         <canvas id="canvas"></canvas>
     </main>
-    <dialog id="dialog"></dialog>
+    <dialog id="dialog">
+        <p id="dialogContent"></p>
+        <button id="closeBtn">Ok</button>
+    </dialog>
     <script src="./build/bundle.js"></script>
 </body>
 </html>

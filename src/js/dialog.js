@@ -1,17 +1,19 @@
 const dialogElement = document.getElementById("dialog");
+const dialogContent = document.getElementById("dialogContent");
+const closeBtn = document.getElementById("closeBtn");
 
-dialogElement.addEventListener("click", closeDialog);
+closeBtn.addEventListener("click", closeDialog);
 
 export function closeDialog() {
     dialogElement.classList.add("close");
     setTimeout(() => {
         dialogElement.classList.remove("close");
         dialogElement.open = false;
-        dialogElement.innerText = "";
+        dialogContent.innerHTML = "";
     }, 300);
 }
 
 export function openDialog(txt) {
-    dialogElement.innerText = txt;
+    dialogContent.innerHTML = txt;
     dialogElement.open = true;
 }
