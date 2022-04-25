@@ -65,7 +65,7 @@ export function randomElement(list) {
 }
 
 // list of real solutions of u*x^2 + v*x + w = 0
-function solveRealQuadratic(a, b, c) {
+function solveRealQuadratic(u, v, w) {
     const discriminant = v * v - 4 * u * w;
     if (discriminant < 0) return [];
     const root = Math.sqrt(discriminant);
