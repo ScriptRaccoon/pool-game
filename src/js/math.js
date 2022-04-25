@@ -64,20 +64,20 @@ export function randomElement(list) {
     return list[randomInteger(0, list.length)];
 }
 
-// list of real solutions of a*x^2 + b*x + c = 0
+// list of real solutions of u*x^2 + v*x + w = 0
 function solveRealQuadratic(a, b, c) {
-    const discriminant = b * b - 4 * a * c;
+    const discriminant = v * v - 4 * u * w;
     if (discriminant < 0) return [];
     const root = Math.sqrt(discriminant);
-    return [(-b + root) / (2 * a), (-b - root) / (2 * a)];
+    return [(-v + root) / (2 * u), (-v - root) / (2 * u)];
 }
 
 // tests if a segment intersects a circle
 export function segmentIntersectsCircle(segment, circle) {
     const [a, b] = segment;
     const [c, r] = circle;
-    // a point of intersection has the form a + t*b with 0 <= t <= 1
-    // and (a.x + t * b.x - c.x)^2 + (a.y + t * b.y - c.y)^2 = r^2.
+    // a point of intersection has the form a + t * (b - a) with 0 <= t <= 1
+    // and (a.x + t * (b.x - a.x) - c.x)^2 + (a.y + t * (b.y - a.y) - c.y)^2 = r^2.
     // this is simply a quadratic equation in t.
     const u = Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2);
     const v =
