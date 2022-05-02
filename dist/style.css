@@ -74,7 +74,6 @@ dialog {
     padding: 30px 40px;
     box-shadow:  0px 0px 20px #000a;
     opacity: 0;
-    max-width: 750px;
 }
 
 dialog p {
