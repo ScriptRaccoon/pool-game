@@ -21,7 +21,7 @@ export function getBumpers() {
                 },
                 { x: canvas.width / 2 - pocketSize, y: margin },
             ],
-            shadow: { x: 0, y: 5 },
+            shadowOffset: { x: 0, y: 5 },
         }),
 
         // bottom left
@@ -45,7 +45,7 @@ export function getBumpers() {
                     y: canvas.height - margin,
                 },
             ],
-            shadow: { x: 0, y: -5 },
+            shadowOffset: { x: 0, y: -5 },
         }),
 
         // top right
@@ -70,7 +70,7 @@ export function getBumpers() {
                     y: margin,
                 },
             ],
-            shadow: { x: 0, y: 5 },
+            shadowOffset: { x: 0, y: 5 },
         }),
 
         // bottom right
@@ -99,7 +99,7 @@ export function getBumpers() {
                     y: canvas.height - margin,
                 },
             ],
-            shadow: { x: 0, y: -5 },
+            shadowOffset: { x: 0, y: -5 },
         }),
 
         // side left
@@ -124,7 +124,7 @@ export function getBumpers() {
                 },
                 { x: margin, y: margin + pocketSize + grace },
             ],
-            shadow: { x: 5, y: 0 },
+            shadowOffset: { x: 5, y: 0 },
         }),
 
         // side right
@@ -152,7 +152,7 @@ export function getBumpers() {
                     y: canvas.height - margin - pocketSize - grace,
                 },
             ],
-            shadow: { x: -5, y: 0 },
+            shadowOffset: { x: -5, y: 0 },
         }),
     ];
 }

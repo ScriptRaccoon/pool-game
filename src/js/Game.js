@@ -12,8 +12,12 @@ export class Game {
         this.won = null;
         this.playing = true;
         this.idle = true;
-        this.whiteBall = balls.find((b) => b.color == COLORS.WHITE);
-        this.blackBall = balls.find((b) => b.color == COLORS.BLACK);
+        this.whiteBall = this.balls.find(
+            (b) => b.color == COLORS.WHITE
+        );
+        this.blackBall = this.balls.find(
+            (b) => b.color == COLORS.BLACK
+        );
         this.controller = new Controller(this.whiteBall);
         this.enableRestart();
     }
@@ -37,6 +41,7 @@ export class Game {
         this.idle = this.balls.every((b) => b.idle || b.inPocket);
         if (this.idle) {
             this.controller.active = true;
+            this.controller.update();
             if (this.blackBall.inPocket) {
                 this.finish();
             } else if (this.whiteBall.inPocket) {
@@ -71,8 +76,8 @@ export class Game {
 
     restart() {
         SOUND.WHIP.play();
-        this.balls.forEach((b) => b.reset(this));
         closeDialog();
+        this.balls.forEach((b) => b.reset(this));
         this.won = null;
         this.playing = true;
         this.idle = true;

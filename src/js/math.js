@@ -30,13 +30,13 @@ export function normalize(v) {
 }
 
 // limit the norm of a vector
-export function limit(v, s) {
+export function limit(s, v) {
     const n = norm(v);
     if (n <= s) return v;
     return scale(s / n, v);
 }
 
-// rotate a vector anticlockwise with an angle
+// rotate a vector around some angle
 export function rotate(alpha, v) {
     return {
         x: v.x * Math.cos(alpha) - v.y * Math.sin(alpha),
@@ -49,19 +49,9 @@ export function dotProduct(v, w) {
     return v.x * w.x + v.y * w.y;
 }
 
-// angle between two vectors in [0,Pi]
+// angle between two vectors
 export function angleBetween(v, w) {
     return Math.acos(dotProduct(v, w) / (norm(v) * norm(w)));
-}
-
-// random integer between a and b
-function randomInteger(a, b) {
-    return a + Math.floor((b - a) * Math.random());
-}
-
-// random element of a list
-export function randomElement(list) {
-    return list[randomInteger(0, list.length)];
 }
 
 // list of real solutions of u*x^2 + v*x + w = 0
@@ -76,9 +66,6 @@ function solveRealQuadratic(u, v, w) {
 export function segmentIntersectsCircle(segment, circle) {
     const [a, b] = segment;
     const [c, r] = circle;
-    // a point of intersection has the form a + t * (b - a) with 0 <= t <= 1
-    // and (a.x + t * (b.x - a.x) - c.x)^2 + (a.y + t * (b.y - a.y) - c.y)^2 = r^2.
-    // this is simply a quadratic equation in t.
     const u = Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2);
     const v =
         2 * ((a.x - c.x) * (b.x - a.x) + (a.y - c.y) * (b.y - a.y));

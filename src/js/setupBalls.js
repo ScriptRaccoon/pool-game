@@ -14,24 +14,24 @@ export const COLORS = {
 };
 
 export function getBalls() {
-    const step = {
-        x: 33,
-        y: 19,
-    };
-
     const start = {
         x:
             canvas.width -
             margin -
             (1 / 4) * (canvas.width - 2 * margin),
-        y: 300 + margin,
+        y: canvas.height / 2,
+    };
+
+    const step = {
+        x: 33,
+        y: 19,
     };
 
     return [
         new Ball({
             pos: {
                 x: margin + (1 / 4) * (canvas.width - 2 * margin),
-                y: 300 + margin,
+                y: start.y,
             },
             color: COLORS.WHITE,
         }),

@@ -2,7 +2,10 @@ const dialogElement = document.getElementById("dialog");
 const dialogContent = document.getElementById("dialogContent");
 const closeBtn = document.getElementById("closeBtn");
 
-closeBtn.addEventListener("click", closeDialog);
+export function openDialog(txt) {
+    dialogContent.innerHTML = txt;
+    dialogElement.open = true;
+}
 
 export function closeDialog() {
     dialogElement.classList.add("close");
@@ -13,7 +16,4 @@ export function closeDialog() {
     }, 300);
 }
 
-export function openDialog(txt) {
-    dialogContent.innerHTML = txt;
-    dialogElement.open = true;
-}
+closeBtn.addEventListener("click", closeDialog);

@@ -11,11 +11,11 @@ export class Pocket {
         this.rotation = rotation;
         this.size = pocketSize;
         this.gradient = tctx.createRadialGradient(
-            this.pos.x,
-            this.pos.y,
             0,
-            this.pos.x,
-            this.pos.y,
+            0,
+            0,
+            0,
+            0,
             this.size
         );
         this.gradient.addColorStop(0.4, "#202020");
@@ -26,9 +26,10 @@ export class Pocket {
         tctx.save();
         tctx.shadowBlur = 10;
         tctx.shadowColor = "#000";
+        tctx.translate(this.pos.x, this.pos.y);
         tctx.fillStyle = this.gradient;
         tctx.beginPath();
-        tctx.arc(this.pos.x, this.pos.y, this.size, 0, 2 * Math.PI);
+        tctx.arc(0, 0, this.size, 0, 2 * Math.PI);
         tctx.fill();
         tctx.closePath();
         tctx.restore();
@@ -44,7 +45,6 @@ export class Pocket {
         tctx.lineWidth = width;
         tctx.strokeStyle = "rgb(230,180,0)";
         tctx.lineCap = "round";
-
         tctx.shadowBlur = 10;
         tctx.shadowColor = "rgb(255,200,0,0.25)";
         tctx.translate(this.pos.x, this.pos.y);

@@ -11,14 +11,12 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    loop();
+loop();
 
-    setTimeout(() => {
-        openDialog(
-            "Use your mouse to control the white ball.<br>" +
-                "Try to pocket every other ball with it.<br>" +
-                "The black ball has to be the last one."
-        );
-    }, 500);
-});
+setTimeout(() => {
+    openDialog(
+        "Use your mouse to control the white ball.<br>" +
+            "Try to pocket every other ball with it.<br>" +
+            "The black ball has to be the last one."
+    );
+}, 500);
