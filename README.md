@@ -19,3 +19,27 @@ Ideas for further improvement:
 -   striped balls
 -   numbers on balls
 -   rotation of balls
+
+## Local development
+
+1. Install the dependencies
+
+```bash
+npm install
+```
+
+2. Build the JS and CSS files
+
+```bash
+npm run dev
+```
+
+during development or
+
+```bash
+npm run build
+```
+
+for the production build.
+
+3. Open `dist/index.html`
